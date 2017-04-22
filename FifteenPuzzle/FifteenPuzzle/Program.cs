@@ -12,12 +12,8 @@ namespace FifteenPuzzle
         {
             string filePath = @"../../../4x4_01_00001.txt";
 
-            FileHelper helper = new FileHelper(filePath);
-
-            int[] temp = helper.GetRowsAndColumns();
-
-            GameBoard board = new GameBoard(temp[0], temp[1]);
-            board.Puzzles = helper.GetData();
+            GameBoard board = new GameBoard();
+            board.Puzzles = FileHelper.InitBoard(filePath);
 
             for (int i = 0; i < 4; i++)
             {
