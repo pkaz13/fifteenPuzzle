@@ -13,21 +13,31 @@ namespace FifteenPuzzle
             string filePath = @"../../../4x4_01_00001.txt";
             string solvedfilePath = @"../../../solved.txt";
 
-            GameBoard board = new GameBoard();
-            board.Puzzles = FileHelper.InitBoard(filePath);
+            GameBoard board = new GameBoard(filePath);
 
-            for (int i = 0; i < 4; i++)
-            {
-                for (int j = 0; j < 4; j++)
-                {
-                    Console.Write(string.Format("{0} ", board.Puzzles[i, j]));
-                }
-                Console.Write(Environment.NewLine + Environment.NewLine);
-            }
+            //for (int i = 0; i < 4; i++)
+            //{
+            //    for (int j = 0; j < 4; j++)
+            //    {
+            //        Console.Write(string.Format("{0} ", board.Puzzles[i, j]));
+            //    }
+            //    Console.Write(Environment.NewLine + Environment.NewLine);
+            //}
 
-            BFS bfs = new BFS();
+            //GameBoard board1 = board.CreateStateLeft(board);
 
-            //if (bfs.IsPuzzleSolved() == true)
+            //for (int i = 0; i < 4; i++)
+            //{
+            //    for (int j = 0; j < 4; j++)
+            //    {
+            //        Console.Write(string.Format("{0} ", board1.Puzzles[i, j]));
+            //    }
+            //    Console.Write(Environment.NewLine + Environment.NewLine);
+            //}
+
+            //BFS bfs = new BFS();
+
+            //if (board.IsPuzzleSolved() == true)
             //    Console.WriteLine("solved");
             //else
             //    Console.WriteLine("not solved");

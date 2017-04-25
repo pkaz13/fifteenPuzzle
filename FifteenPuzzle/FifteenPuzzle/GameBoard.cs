@@ -18,40 +18,53 @@ namespace FifteenPuzzle
 
         public int[,] Puzzles { get; set; }
 
+        private int[,] solvedPuzzle;
+
+        private const string solvedFilePath = @"../../../solved.txt";
+
         public GameBoard()
         {
-            
+            FreeSpacePosition = new int[2];
         }
 
-        public void SwapUp()   
+        public GameBoard(string initialFilePath)
+        {
+            Puzzles = FileHelper.InitBoard(initialFilePath);
+            solvedPuzzle = FileHelper.InitBoard(solvedFilePath);
+            FreeSpacePosition = new int[2];
+            SetFreeSpacePosition();
+            SetPossibleMoves();
+        }
+
+        private void SwapUp()   
         {
             int tempValue = Puzzles[FreeSpacePosition[0] - 1, FreeSpacePosition[1]];
             Puzzles[FreeSpacePosition[0] - 1, FreeSpacePosition[1]] = 0;
             Puzzles[FreeSpacePosition[0], FreeSpacePosition[1]] = tempValue;
         }
 
-        public void SwapDown()
+        private void SwapDown()
         {
             int tempValue = Puzzles[FreeSpacePosition[0] + 1, FreeSpacePosition[1]];
             Puzzles[FreeSpacePosition[0] + 1, FreeSpacePosition[1]] = 0;
             Puzzles[FreeSpacePosition[0], FreeSpacePosition[1]] = tempValue;
         }
 
-        public void SwapLeft()
+        private void SwapLeft()
         {
             int tempValue = Puzzles[FreeSpacePosition[0], FreeSpacePosition[1] - 1];
             Puzzles[FreeSpacePosition[0], FreeSpacePosition[1] - 1] = 0;
             Puzzles[FreeSpacePosition[0], FreeSpacePosition[1]] = tempValue;
         }
 
-        public void SwapRight()
+        private void SwapRight()
         {
             int tempValue = Puzzles[FreeSpacePosition[0], FreeSpacePosition[1] + 1];
             Puzzles[FreeSpacePosition[0], FreeSpacePosition[1] + 1] = 0;
             Puzzles[FreeSpacePosition[0], FreeSpacePosition[1]] = tempValue;
         }
 
-        public void SetFreeSpacePosition()
+        private void SetFreeSpacePosition()
         {
             for (int i = 0; i < 4; i++)
             {
@@ -66,7 +79,7 @@ namespace FifteenPuzzle
             }
         }
 
-        public void SetPossibleMoves()
+        private void SetPossibleMoves()
         {
             char[] possibleMoves;
            
@@ -150,6 +163,51 @@ namespace FifteenPuzzle
             }
         }
 
+        public GameBoard CreateStateRight(GameBoard board)
+        {
+            board.ParentBoard = board;
+            board.SwapRight();
+            board.Move = (char)Moves.Right;
+            board.SetFreeSpacePosition();
+            board.SetPossibleMoves();
+            return board;
+        }
 
+        public GameBoard CreateStateLeft(GameBoard board)
+        {
+            board.ParentBoard = board;
+            board.SwapLeft();
+            board.Move = (char)Moves.Left;
+            board.SetFreeSpacePosition();
+            board.SetPossibleMoves();
+            return board;
+        }
+
+        public GameBoard CreateStateUp(GameBoard board)
+        {
+            board.ParentBoard = board;
+            board.SwapUp();
+            board.Move = (char)Moves.Up;
+            board.SetFreeSpacePosition();
+            board.SetPossibleMoves();
+            return board;
+        }
+
+        public GameBoard CreateStateDown(GameBoard board)
+        {
+            board.ParentBoard = board;
+            board.SwapDown();
+            board.Move = (char)Moves.Down;
+            board.SetFreeSpacePosition();
+            board.SetPossibleMoves();
+            return board;
+        }
+
+        public bool IsPuzzleSolved()
+        {
+            return (Puzzles.Rank == solvedPuzzle.Rank &&
+                Enumerable.Range(0, Puzzles.Rank).All(dimension => Puzzles.GetLength(dimension) == solvedPuzzle.GetLength(dimension)) &&
+                Puzzles.Cast<int>().SequenceEqual(solvedPuzzle.Cast<int>()));
+        }
     }
 }

@@ -8,272 +8,272 @@ namespace FifteenPuzzle
 {
     public class BFS 
     {
-        public int[,] SolvedPuzzle { get; set; }
+        //public int[,] SolvedPuzzle { get; set; }
 
         public BFS()
         {
 
         }
         
-        public bool IsPuzzleSolved(int[,] array)
-        {
-            return (array.Rank == SolvedPuzzle.Rank &&
-                Enumerable.Range(0, array.Rank).All(dimension => array.GetLength(dimension) == SolvedPuzzle.GetLength(dimension)) &&
-                array.Cast<int>().SequenceEqual(SolvedPuzzle.Cast<int>()));
-        }
+        //public bool IsPuzzleSolved(int[,] array)
+        //{
+        //    return (array.Rank == SolvedPuzzle.Rank &&
+        //        Enumerable.Range(0, array.Rank).All(dimension => array.GetLength(dimension) == SolvedPuzzle.GetLength(dimension)) &&
+        //        array.Cast<int>().SequenceEqual(SolvedPuzzle.Cast<int>()));
+        //}
 
-        public void CreateStates(GameBoard board)
-        {
-            GameBoard[] states = new GameBoard[4];
-            GameBoard up = null;
-            GameBoard down = null;
-            GameBoard right = null;
-            GameBoard left = null;
+        //public void CreateStates(GameBoard board)
+        //{
+        //    GameBoard[] states = new GameBoard[4];
+        //    GameBoard up = null;
+        //    GameBoard down = null;
+        //    GameBoard right = null;
+        //    GameBoard left = null;
 
-            if (board.PossibleMoves == PossibleMoves.LRUD.ToString())
-            {
-                up = new GameBoard();
-                up.Puzzles = board.Puzzles;
-                up.FreeSpacePosition = board.FreeSpacePosition;
-                up.SwapUp();
-                //update
-                up.Move = (char)Moves.Up;
-                up.SetFreeSpacePosition();
-                up.SetPossibleMoves();
+        //    if (board.PossibleMoves == PossibleMoves.LRUD.ToString())
+        //    {
+        //        up = new GameBoard();
+        //        up.Puzzles = board.Puzzles;
+        //        up.FreeSpacePosition = board.FreeSpacePosition;
+        //        up.SwapUp();
+        //        //update
+        //        up.Move = (char)Moves.Up;
+        //        up.SetFreeSpacePosition();
+        //        up.SetPossibleMoves();
 
-                down = new GameBoard();
-                down.Puzzles = board.Puzzles;
-                down.FreeSpacePosition = board.FreeSpacePosition;
-                down.SwapDown();
-                //update
-                down.Move = (char)Moves.Down;
-                down.SetFreeSpacePosition();
-                down.SetPossibleMoves();
+        //        down = new GameBoard();
+        //        down.Puzzles = board.Puzzles;
+        //        down.FreeSpacePosition = board.FreeSpacePosition;
+        //        down.SwapDown();
+        //        //update
+        //        down.Move = (char)Moves.Down;
+        //        down.SetFreeSpacePosition();
+        //        down.SetPossibleMoves();
 
-                right = new GameBoard();
-                right.Puzzles = board.Puzzles;
-                right.FreeSpacePosition = board.FreeSpacePosition;
-                right.SwapRight();
-                //update
-                right.Move = (char)Moves.Right;
-                right.SetFreeSpacePosition();
-                right.SetPossibleMoves();
+        //        right = new GameBoard();
+        //        right.Puzzles = board.Puzzles;
+        //        right.FreeSpacePosition = board.FreeSpacePosition;
+        //        right.SwapRight();
+        //        //update
+        //        right.Move = (char)Moves.Right;
+        //        right.SetFreeSpacePosition();
+        //        right.SetPossibleMoves();
 
-                left = new GameBoard();
-                left.Puzzles = board.Puzzles;
-                left.FreeSpacePosition = board.FreeSpacePosition;
-                left.SwapLeft();
-                //update
-                left.Move = (char)Moves.Left;
-                left.SetFreeSpacePosition();
-                left.SetPossibleMoves();
-            }
+        //        left = new GameBoard();
+        //        left.Puzzles = board.Puzzles;
+        //        left.FreeSpacePosition = board.FreeSpacePosition;
+        //        left.SwapLeft();
+        //        //update
+        //        left.Move = (char)Moves.Left;
+        //        left.SetFreeSpacePosition();
+        //        left.SetPossibleMoves();
+        //    }
 
-            if (board.PossibleMoves == PossibleMoves.LRD.ToString())
-            {
-                down = new GameBoard();
-                down.Puzzles = board.Puzzles;
-                down.FreeSpacePosition = board.FreeSpacePosition;
-                down.SwapDown();
-                //update
-                down.Move = (char)Moves.Down;
-                down.SetFreeSpacePosition();
-                down.SetPossibleMoves();
+        //    if (board.PossibleMoves == PossibleMoves.LRD.ToString())
+        //    {
+        //        down = new GameBoard();
+        //        down.Puzzles = board.Puzzles;
+        //        down.FreeSpacePosition = board.FreeSpacePosition;
+        //        down.SwapDown();
+        //        //update
+        //        down.Move = (char)Moves.Down;
+        //        down.SetFreeSpacePosition();
+        //        down.SetPossibleMoves();
 
-                right = new GameBoard();
-                right.Puzzles = board.Puzzles;
-                right.FreeSpacePosition = board.FreeSpacePosition;
-                right.SwapRight();
-                //update
-                right.Move = (char)Moves.Right;
-                right.SetFreeSpacePosition();
-                right.SetPossibleMoves();
+        //        right = new GameBoard();
+        //        right.Puzzles = board.Puzzles;
+        //        right.FreeSpacePosition = board.FreeSpacePosition;
+        //        right.SwapRight();
+        //        //update
+        //        right.Move = (char)Moves.Right;
+        //        right.SetFreeSpacePosition();
+        //        right.SetPossibleMoves();
 
-                left = new GameBoard();
-                left.Puzzles = board.Puzzles;
-                left.FreeSpacePosition = board.FreeSpacePosition;
-                left.SwapLeft();
-                //update
-                left.Move = (char)Moves.Left;
-                left.SetFreeSpacePosition();
-                left.SetPossibleMoves();
-            }
+        //        left = new GameBoard();
+        //        left.Puzzles = board.Puzzles;
+        //        left.FreeSpacePosition = board.FreeSpacePosition;
+        //        left.SwapLeft();
+        //        //update
+        //        left.Move = (char)Moves.Left;
+        //        left.SetFreeSpacePosition();
+        //        left.SetPossibleMoves();
+        //    }
 
-            if (board.PossibleMoves == PossibleMoves.LUD.ToString())
-            {
-                up = new GameBoard();
-                up.Puzzles = board.Puzzles;
-                up.FreeSpacePosition = board.FreeSpacePosition;
-                up.SwapUp();
-                //update
-                up.Move = (char)Moves.Up;
-                up.SetFreeSpacePosition();
-                up.SetPossibleMoves();
+        //    if (board.PossibleMoves == PossibleMoves.LUD.ToString())
+        //    {
+        //        up = new GameBoard();
+        //        up.Puzzles = board.Puzzles;
+        //        up.FreeSpacePosition = board.FreeSpacePosition;
+        //        up.SwapUp();
+        //        //update
+        //        up.Move = (char)Moves.Up;
+        //        up.SetFreeSpacePosition();
+        //        up.SetPossibleMoves();
 
-                down = new GameBoard();
-                down.Puzzles = board.Puzzles;
-                down.FreeSpacePosition = board.FreeSpacePosition;
-                down.SwapDown();
-                //update
-                down.Move = (char)Moves.Down;
-                down.SetFreeSpacePosition();
-                down.SetPossibleMoves();
+        //        down = new GameBoard();
+        //        down.Puzzles = board.Puzzles;
+        //        down.FreeSpacePosition = board.FreeSpacePosition;
+        //        down.SwapDown();
+        //        //update
+        //        down.Move = (char)Moves.Down;
+        //        down.SetFreeSpacePosition();
+        //        down.SetPossibleMoves();
 
-                left = new GameBoard();
-                left.Puzzles = board.Puzzles;
-                left.FreeSpacePosition = board.FreeSpacePosition;
-                left.SwapLeft();
-                //update
-                left.Move = (char)Moves.Left;
-                left.SetFreeSpacePosition();
-                left.SetPossibleMoves();
-            }
+        //        left = new GameBoard();
+        //        left.Puzzles = board.Puzzles;
+        //        left.FreeSpacePosition = board.FreeSpacePosition;
+        //        left.SwapLeft();
+        //        //update
+        //        left.Move = (char)Moves.Left;
+        //        left.SetFreeSpacePosition();
+        //        left.SetPossibleMoves();
+        //    }
 
-            if (board.PossibleMoves == PossibleMoves.LRU.ToString())
-            {
-                up = new GameBoard();
-                up.Puzzles = board.Puzzles;
-                up.FreeSpacePosition = board.FreeSpacePosition;
-                up.SwapUp();
-                //update
-                up.Move = (char)Moves.Up;
-                up.SetFreeSpacePosition();
-                up.SetPossibleMoves();
+        //    if (board.PossibleMoves == PossibleMoves.LRU.ToString())
+        //    {
+        //        up = new GameBoard();
+        //        up.Puzzles = board.Puzzles;
+        //        up.FreeSpacePosition = board.FreeSpacePosition;
+        //        up.SwapUp();
+        //        //update
+        //        up.Move = (char)Moves.Up;
+        //        up.SetFreeSpacePosition();
+        //        up.SetPossibleMoves();
 
-                right = new GameBoard();
-                right.Puzzles = board.Puzzles;
-                right.FreeSpacePosition = board.FreeSpacePosition;
-                right.SwapRight();
-                //update
-                right.Move = (char)Moves.Right;
-                right.SetFreeSpacePosition();
-                right.SetPossibleMoves();
+        //        right = new GameBoard();
+        //        right.Puzzles = board.Puzzles;
+        //        right.FreeSpacePosition = board.FreeSpacePosition;
+        //        right.SwapRight();
+        //        //update
+        //        right.Move = (char)Moves.Right;
+        //        right.SetFreeSpacePosition();
+        //        right.SetPossibleMoves();
 
-                left = new GameBoard();
-                left.Puzzles = board.Puzzles;
-                left.FreeSpacePosition = board.FreeSpacePosition;
-                left.SwapLeft();
-                //update
-                left.Move = (char)Moves.Left;
-                left.SetFreeSpacePosition();
-                left.SetPossibleMoves();
-            }
+        //        left = new GameBoard();
+        //        left.Puzzles = board.Puzzles;
+        //        left.FreeSpacePosition = board.FreeSpacePosition;
+        //        left.SwapLeft();
+        //        //update
+        //        left.Move = (char)Moves.Left;
+        //        left.SetFreeSpacePosition();
+        //        left.SetPossibleMoves();
+        //    }
 
-            if (board.PossibleMoves == PossibleMoves.RUD.ToString())
-            {
-                up = new GameBoard();
-                up.Puzzles = board.Puzzles;
-                up.FreeSpacePosition = board.FreeSpacePosition;
-                up.SwapUp();
-                //update
-                up.Move = (char)Moves.Up;
-                up.SetFreeSpacePosition();
-                up.SetPossibleMoves();
+        //    if (board.PossibleMoves == PossibleMoves.RUD.ToString())
+        //    {
+        //        up = new GameBoard();
+        //        up.Puzzles = board.Puzzles;
+        //        up.FreeSpacePosition = board.FreeSpacePosition;
+        //        up.SwapUp();
+        //        //update
+        //        up.Move = (char)Moves.Up;
+        //        up.SetFreeSpacePosition();
+        //        up.SetPossibleMoves();
 
-                down = new GameBoard();
-                down.Puzzles = board.Puzzles;
-                down.FreeSpacePosition = board.FreeSpacePosition;
-                down.SwapDown();
-                //update
-                down.Move = (char)Moves.Down;
-                down.SetFreeSpacePosition();
-                down.SetPossibleMoves();
+        //        down = new GameBoard();
+        //        down.Puzzles = board.Puzzles;
+        //        down.FreeSpacePosition = board.FreeSpacePosition;
+        //        down.SwapDown();
+        //        //update
+        //        down.Move = (char)Moves.Down;
+        //        down.SetFreeSpacePosition();
+        //        down.SetPossibleMoves();
 
-                right = new GameBoard();
-                right.Puzzles = board.Puzzles;
-                right.FreeSpacePosition = board.FreeSpacePosition;
-                right.SwapRight();
-                //update
-                right.Move = (char)Moves.Right;
-                right.SetFreeSpacePosition();
-                right.SetPossibleMoves();
-            }
+        //        right = new GameBoard();
+        //        right.Puzzles = board.Puzzles;
+        //        right.FreeSpacePosition = board.FreeSpacePosition;
+        //        right.SwapRight();
+        //        //update
+        //        right.Move = (char)Moves.Right;
+        //        right.SetFreeSpacePosition();
+        //        right.SetPossibleMoves();
+        //    }
 
-            if (board.PossibleMoves == PossibleMoves.RD.ToString())
-            {
-                down = new GameBoard();
-                down.Puzzles = board.Puzzles;
-                down.FreeSpacePosition = board.FreeSpacePosition;
-                down.SwapDown();
-                //update
-                down.Move = (char)Moves.Down;
-                down.SetFreeSpacePosition();
-                down.SetPossibleMoves();
+        //    if (board.PossibleMoves == PossibleMoves.RD.ToString())
+        //    {
+        //        down = new GameBoard();
+        //        down.Puzzles = board.Puzzles;
+        //        down.FreeSpacePosition = board.FreeSpacePosition;
+        //        down.SwapDown();
+        //        //update
+        //        down.Move = (char)Moves.Down;
+        //        down.SetFreeSpacePosition();
+        //        down.SetPossibleMoves();
 
-                right = new GameBoard();
-                right.Puzzles = board.Puzzles;
-                right.FreeSpacePosition = board.FreeSpacePosition;
-                right.SwapRight();
-                //update
-                right.Move = (char)Moves.Right;
-                right.SetFreeSpacePosition();
-                right.SetPossibleMoves();
-            }
+        //        right = new GameBoard();
+        //        right.Puzzles = board.Puzzles;
+        //        right.FreeSpacePosition = board.FreeSpacePosition;
+        //        right.SwapRight();
+        //        //update
+        //        right.Move = (char)Moves.Right;
+        //        right.SetFreeSpacePosition();
+        //        right.SetPossibleMoves();
+        //    }
 
-            if (board.PossibleMoves == PossibleMoves.LD.ToString())
-            {
-                down = new GameBoard();
-                down.Puzzles = board.Puzzles;
-                down.FreeSpacePosition = board.FreeSpacePosition;
-                down.SwapDown();
-                //update
-                down.Move = (char)Moves.Down;
-                down.SetFreeSpacePosition();
-                down.SetPossibleMoves();
+        //    if (board.PossibleMoves == PossibleMoves.LD.ToString())
+        //    {
+        //        down = new GameBoard();
+        //        down.Puzzles = board.Puzzles;
+        //        down.FreeSpacePosition = board.FreeSpacePosition;
+        //        down.SwapDown();
+        //        //update
+        //        down.Move = (char)Moves.Down;
+        //        down.SetFreeSpacePosition();
+        //        down.SetPossibleMoves();
 
-                left = new GameBoard();
-                left.Puzzles = board.Puzzles;
-                left.FreeSpacePosition = board.FreeSpacePosition;
-                left.SwapLeft();
-                //update
-                left.Move = (char)Moves.Left;
-                left.SetFreeSpacePosition();
-                left.SetPossibleMoves();
-            }
+        //        left = new GameBoard();
+        //        left.Puzzles = board.Puzzles;
+        //        left.FreeSpacePosition = board.FreeSpacePosition;
+        //        left.SwapLeft();
+        //        //update
+        //        left.Move = (char)Moves.Left;
+        //        left.SetFreeSpacePosition();
+        //        left.SetPossibleMoves();
+        //    }
 
-            if (board.PossibleMoves == PossibleMoves.LU.ToString())
-            {
-                up = new GameBoard();
-                up.Puzzles = board.Puzzles;
-                up.FreeSpacePosition = board.FreeSpacePosition;
-                up.SwapUp();
-                //update
-                up.Move = (char)Moves.Up;
-                up.SetFreeSpacePosition();
-                up.SetPossibleMoves();
+        //    if (board.PossibleMoves == PossibleMoves.LU.ToString())
+        //    {
+        //        up = new GameBoard();
+        //        up.Puzzles = board.Puzzles;
+        //        up.FreeSpacePosition = board.FreeSpacePosition;
+        //        up.SwapUp();
+        //        //update
+        //        up.Move = (char)Moves.Up;
+        //        up.SetFreeSpacePosition();
+        //        up.SetPossibleMoves();
                  
-                left = new GameBoard();
-                left.Puzzles = board.Puzzles;
-                left.FreeSpacePosition = board.FreeSpacePosition;
-                left.SwapLeft();
-                //update
-                left.Move = (char)Moves.Left;
-                left.SetFreeSpacePosition();
-                left.SetPossibleMoves();
-            }
+        //        left = new GameBoard();
+        //        left.Puzzles = board.Puzzles;
+        //        left.FreeSpacePosition = board.FreeSpacePosition;
+        //        left.SwapLeft();
+        //        //update
+        //        left.Move = (char)Moves.Left;
+        //        left.SetFreeSpacePosition();
+        //        left.SetPossibleMoves();
+        //    }
 
-            if (board.PossibleMoves == PossibleMoves.RU.ToString())
-            {
-                up = new GameBoard();
-                up.Puzzles = board.Puzzles;
-                up.FreeSpacePosition = board.FreeSpacePosition;
-                up.SwapUp();
-                //update
-                up.Move = (char)Moves.Up;
-                up.SetFreeSpacePosition();
-                up.SetPossibleMoves();
+        //    if (board.PossibleMoves == PossibleMoves.RU.ToString())
+        //    {
+        //        up = new GameBoard();
+        //        up.Puzzles = board.Puzzles;
+        //        up.FreeSpacePosition = board.FreeSpacePosition;
+        //        up.SwapUp();
+        //        //update
+        //        up.Move = (char)Moves.Up;
+        //        up.SetFreeSpacePosition();
+        //        up.SetPossibleMoves();
 
-                right = new GameBoard();
-                right.Puzzles = board.Puzzles;
-                right.FreeSpacePosition = board.FreeSpacePosition;
-                right.SwapRight();
-                //update
-                right.Move = (char)Moves.Right;
-                right.SetFreeSpacePosition();
-                right.SetPossibleMoves();
-            }
+        //        right = new GameBoard();
+        //        right.Puzzles = board.Puzzles;
+        //        right.FreeSpacePosition = board.FreeSpacePosition;
+        //        right.SwapRight();
+        //        //update
+        //        right.Move = (char)Moves.Right;
+        //        right.SetFreeSpacePosition();
+        //        right.SetPossibleMoves();
+        //    }
 
-        }
+        //}
 
         //private int[,] SwapUp(int[,] array, int i, int j)   //i, j - current 0 position
         //{
