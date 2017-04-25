@@ -10,6 +10,8 @@ namespace FifteenPuzzle
     {
         public GameBoard ParentBoard { get; set; }
 
+        public List<GameBoard> Adjacents { get; set; }
+
         public char Move { get; set; }
 
         public string PossibleMoves { get; set; }
@@ -25,6 +27,7 @@ namespace FifteenPuzzle
         public GameBoard()
         {
             FreeSpacePosition = new int[2];
+            Adjacents = new List<GameBoard>();
         }
 
         public GameBoard(string initialFilePath)
@@ -32,6 +35,7 @@ namespace FifteenPuzzle
             Puzzles = FileHelper.InitBoard(initialFilePath);
             solvedPuzzle = FileHelper.InitBoard(solvedFilePath);
             FreeSpacePosition = new int[2];
+            Adjacents = new List<GameBoard>();
             SetFreeSpacePosition();
             SetPossibleMoves();
         }
