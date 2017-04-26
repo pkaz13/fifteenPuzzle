@@ -10,15 +10,16 @@ namespace FifteenPuzzle
     {
         public GameBoard InitialBoard { get; set; }
 
-        //private PossibleMoves possibleMoves;
-
         public BFS(string filePath)
         {
             InitialBoard = new GameBoard(filePath);
         }
 
-        public Solution Search()
+        public Solution Search(string moves)
         {
+            char[] movesFromParameter = moves.ToCharArray();
+            char[] possibleMovesFromBoard;
+                 
             int numberofIteretions = 0;
             Solution solution = new Solution();
             Queue<GameBoard> queue = new Queue<GameBoard>();
@@ -31,6 +32,10 @@ namespace FifteenPuzzle
                 {
                     return solution;
                 }
+                possibleMovesFromBoard = currentBoard.PossibleMoves.ToCharArray();
+
+
+
                 if (currentBoard.PossibleMoves == PossibleMoves.LRUD.ToString())
                 {
                     currentBoard.Adjacents.Add(currentBoard.CreateStateLeft(currentBoard));
@@ -91,7 +96,6 @@ namespace FifteenPuzzle
             }
             return null;
         }
-
-        
+       
     }
 }
