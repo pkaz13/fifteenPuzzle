@@ -41,35 +41,35 @@ namespace FifteenPuzzle
             SetPossibleMoves();
         }
 
-        public void SwapUp()   
+        private void SwapUp()   
         {
             int tempValue = Puzzles[FreeSpacePosition[0] - 1, FreeSpacePosition[1]];
             Puzzles[FreeSpacePosition[0] - 1, FreeSpacePosition[1]] = 0;
             Puzzles[FreeSpacePosition[0], FreeSpacePosition[1]] = tempValue;
         }
 
-        public void SwapDown()
+        private void SwapDown()
         {
             int tempValue = Puzzles[FreeSpacePosition[0] + 1, FreeSpacePosition[1]];
             Puzzles[FreeSpacePosition[0] + 1, FreeSpacePosition[1]] = 0;
             Puzzles[FreeSpacePosition[0], FreeSpacePosition[1]] = tempValue;
         }
 
-        public void SwapLeft()
+        private void SwapLeft()
         {
             int tempValue = Puzzles[FreeSpacePosition[0], FreeSpacePosition[1] - 1];
             Puzzles[FreeSpacePosition[0], FreeSpacePosition[1] - 1] = 0;
             Puzzles[FreeSpacePosition[0], FreeSpacePosition[1]] = tempValue;
         }
 
-        public void SwapRight()
+        private void SwapRight()
         {
             int tempValue = Puzzles[FreeSpacePosition[0], FreeSpacePosition[1] + 1];
             Puzzles[FreeSpacePosition[0], FreeSpacePosition[1] + 1] = 0;
             Puzzles[FreeSpacePosition[0], FreeSpacePosition[1]] = tempValue;
         }
 
-        public void SetFreeSpacePosition()
+        private void SetFreeSpacePosition()
         {
             for (int i = 0; i < 4; i++)
             {
@@ -84,7 +84,7 @@ namespace FifteenPuzzle
             }
         }
 
-        public void SetPossibleMoves()
+        private void SetPossibleMoves()
         {
             char[] possibleMoves;
            
@@ -168,13 +168,93 @@ namespace FifteenPuzzle
             }
         }
 
-        
-
         public bool IsPuzzleSolved()
         {
             return (Puzzles.Rank == solvedPuzzle.Rank &&
                 Enumerable.Range(0, Puzzles.Rank).All(dimension => Puzzles.GetLength(dimension) == solvedPuzzle.GetLength(dimension)) &&
                 Puzzles.Cast<int>().SequenceEqual(solvedPuzzle.Cast<int>()));
+        }
+
+        public GameBoard CreateStateRight(GameBoard board)
+        {
+            GameBoard newState = new GameBoard();
+            newState.ParentBoard = board;
+            newState.Puzzles = CopyValues(board.Puzzles);
+            newState.FreeSpacePosition = SetFreeSpacePosition(board.Puzzles);
+            newState.SwapRight();
+            newState.Move = (char)Moves.Right;
+            newState.SetFreeSpacePosition();
+            newState.SetPossibleMoves();
+            return newState;
+        }
+
+        public GameBoard CreateStateLeft(GameBoard board)
+        {
+            GameBoard newState = new GameBoard();
+            newState.ParentBoard = board;
+            newState.Puzzles = CopyValues(board.Puzzles);
+            newState.FreeSpacePosition = SetFreeSpacePosition(board.Puzzles);
+            newState.SwapLeft();
+            newState.Move = (char)Moves.Left;
+            newState.SetFreeSpacePosition();
+            newState.SetPossibleMoves();
+            return newState;
+        }
+
+        public GameBoard CreateStateUp(GameBoard board)
+        {
+            GameBoard newState = new GameBoard();
+            newState.ParentBoard = board;
+            newState.Puzzles = CopyValues(board.Puzzles);
+            newState.FreeSpacePosition = SetFreeSpacePosition(board.Puzzles);
+            newState.SwapUp();
+            newState.Move = (char)Moves.Up;
+            newState.SetFreeSpacePosition();
+            newState.SetPossibleMoves();
+            return newState;
+        }
+
+        public GameBoard CreateStateDown(GameBoard board)
+        {
+            GameBoard newState = new GameBoard();
+            newState.ParentBoard = board;
+            newState.Puzzles = CopyValues(board.Puzzles);
+            newState.FreeSpacePosition = SetFreeSpacePosition(board.Puzzles);
+            newState.SwapDown();
+            newState.Move = (char)Moves.Down;
+            newState.SetFreeSpacePosition();
+            newState.SetPossibleMoves();
+            return newState;
+        }
+
+        private int[,] CopyValues(int[,] array)
+        {
+            int[,] newArray = new int[4, 4];
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    newArray[i, j] = array[i, j];
+                }
+            }
+            return newArray;
+        }
+
+        private int[] SetFreeSpacePosition(int[,] array)
+        {
+            int[] newArray = new int[2];
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    if (array[i, j] == 0)
+                    {
+                        newArray[0] = i;
+                        newArray[1] = j;
+                    }
+                }
+            }
+            return newArray;
         }
     }
 }

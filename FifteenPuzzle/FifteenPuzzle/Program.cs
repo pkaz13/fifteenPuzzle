@@ -13,17 +13,23 @@ namespace FifteenPuzzle
             string filePath = @"../../../4x4_03_00007.txt";
             string solvedfilePath = @"../../../solved.txt";
 
-            //GameBoard board = new GameBoard(filePath);
+            GameBoard board = new GameBoard(filePath);
 
             BFS bfs = new BFS(filePath);
 
-            GameBoard solved = bfs.Search();
+            //GameBoard solved = bfs.Search();
+            Solution solution = bfs.Search();
+            //solution.ProccesResult();
+            //Console.Write(solution.NumberOfMoves);
+            //Console.WriteLine();
+            //Console.Write(solution.MovesMade);
+            //FileHelper.SaveSolution(solution.NumberOfMoves, solution.MovesMade);
 
             for (int i = 0; i < 4; i++)
             {
                 for (int j = 0; j < 4; j++)
                 {
-                    Console.Write(string.Format("{0} ", solved.Puzzles[i, j]));
+                    Console.Write(string.Format("{0} ", solution.board.Puzzles[i, j]));
                 }
                 Console.Write(Environment.NewLine + Environment.NewLine);
             }
