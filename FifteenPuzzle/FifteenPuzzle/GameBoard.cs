@@ -28,6 +28,7 @@ namespace FifteenPuzzle
         {
             FreeSpacePosition = new int[2];
             Adjacents = new List<GameBoard>();
+            solvedPuzzle = FileHelper.InitBoard(solvedFilePath);
         }
 
         public GameBoard(string initialFilePath)
@@ -40,35 +41,35 @@ namespace FifteenPuzzle
             SetPossibleMoves();
         }
 
-        private void SwapUp()   
+        public void SwapUp()   
         {
             int tempValue = Puzzles[FreeSpacePosition[0] - 1, FreeSpacePosition[1]];
             Puzzles[FreeSpacePosition[0] - 1, FreeSpacePosition[1]] = 0;
             Puzzles[FreeSpacePosition[0], FreeSpacePosition[1]] = tempValue;
         }
 
-        private void SwapDown()
+        public void SwapDown()
         {
             int tempValue = Puzzles[FreeSpacePosition[0] + 1, FreeSpacePosition[1]];
             Puzzles[FreeSpacePosition[0] + 1, FreeSpacePosition[1]] = 0;
             Puzzles[FreeSpacePosition[0], FreeSpacePosition[1]] = tempValue;
         }
 
-        private void SwapLeft()
+        public void SwapLeft()
         {
             int tempValue = Puzzles[FreeSpacePosition[0], FreeSpacePosition[1] - 1];
             Puzzles[FreeSpacePosition[0], FreeSpacePosition[1] - 1] = 0;
             Puzzles[FreeSpacePosition[0], FreeSpacePosition[1]] = tempValue;
         }
 
-        private void SwapRight()
+        public void SwapRight()
         {
             int tempValue = Puzzles[FreeSpacePosition[0], FreeSpacePosition[1] + 1];
             Puzzles[FreeSpacePosition[0], FreeSpacePosition[1] + 1] = 0;
             Puzzles[FreeSpacePosition[0], FreeSpacePosition[1]] = tempValue;
         }
 
-        private void SetFreeSpacePosition()
+        public void SetFreeSpacePosition()
         {
             for (int i = 0; i < 4; i++)
             {
@@ -83,7 +84,7 @@ namespace FifteenPuzzle
             }
         }
 
-        private void SetPossibleMoves()
+        public void SetPossibleMoves()
         {
             char[] possibleMoves;
            
@@ -167,45 +168,7 @@ namespace FifteenPuzzle
             }
         }
 
-        public GameBoard CreateStateRight(GameBoard board)
-        {
-            board.ParentBoard = board;
-            board.SwapRight();
-            board.Move = (char)Moves.Right;
-            board.SetFreeSpacePosition();
-            board.SetPossibleMoves();
-            return board;
-        }
-
-        public GameBoard CreateStateLeft(GameBoard board)
-        {
-            board.ParentBoard = board;
-            board.SwapLeft();
-            board.Move = (char)Moves.Left;
-            board.SetFreeSpacePosition();
-            board.SetPossibleMoves();
-            return board;
-        }
-
-        public GameBoard CreateStateUp(GameBoard board)
-        {
-            board.ParentBoard = board;
-            board.SwapUp();
-            board.Move = (char)Moves.Up;
-            board.SetFreeSpacePosition();
-            board.SetPossibleMoves();
-            return board;
-        }
-
-        public GameBoard CreateStateDown(GameBoard board)
-        {
-            board.ParentBoard = board;
-            board.SwapDown();
-            board.Move = (char)Moves.Down;
-            board.SetFreeSpacePosition();
-            board.SetPossibleMoves();
-            return board;
-        }
+        
 
         public bool IsPuzzleSolved()
         {

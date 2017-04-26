@@ -10,19 +10,23 @@ namespace FifteenPuzzle
     {
         static void Main(string[] args)
         {
-            string filePath = @"../../../4x4_01_00001.txt";
+            string filePath = @"../../../4x4_03_00007.txt";
             string solvedfilePath = @"../../../solved.txt";
 
-            GameBoard board = new GameBoard(filePath);
+            //GameBoard board = new GameBoard(filePath);
 
-            //for (int i = 0; i < 4; i++)
-            //{
-            //    for (int j = 0; j < 4; j++)
-            //    {
-            //        Console.Write(string.Format("{0} ", board.Puzzles[i, j]));
-            //    }
-            //    Console.Write(Environment.NewLine + Environment.NewLine);
-            //}
+            BFS bfs = new BFS(filePath);
+
+            GameBoard solved = bfs.Search();
+
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    Console.Write(string.Format("{0} ", solved.Puzzles[i, j]));
+                }
+                Console.Write(Environment.NewLine + Environment.NewLine);
+            }
 
             //GameBoard board1 = board.CreateStateLeft(board);
 
