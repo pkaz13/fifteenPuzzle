@@ -18,7 +18,7 @@ namespace FifteenPuzzle
             BFS bfs = new BFS(filePath);
 
             //GameBoard solved = bfs.Search();
-            Solution solution = bfs.Search();
+            Solution solution = bfs.Search("RUDL");
             //solution.ProccesResult();
             //Console.Write(solution.NumberOfMoves);
             //Console.WriteLine();

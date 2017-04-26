@@ -34,58 +34,12 @@ namespace FifteenPuzzle
                 }
                 possibleMovesFromBoard = currentBoard.PossibleMoves.ToCharArray();
 
-
-
-                if (currentBoard.PossibleMoves == PossibleMoves.LRUD.ToString())
+                for (int i = 0; i < movesFromParameter.Length; i++)
                 {
-                    currentBoard.Adjacents.Add(currentBoard.CreateStateLeft(currentBoard));
-                    currentBoard.Adjacents.Add(currentBoard.CreateStateRight(currentBoard));
-                    currentBoard.Adjacents.Add(currentBoard.CreateStateUp(currentBoard));
-                    currentBoard.Adjacents.Add(currentBoard.CreateStateDown(currentBoard));
-                }
-                if (currentBoard.PossibleMoves == PossibleMoves.LRD.ToString())
-                {
-                    currentBoard.Adjacents.Add(currentBoard.CreateStateLeft(currentBoard));
-                    currentBoard.Adjacents.Add(currentBoard.CreateStateRight(currentBoard));
-                    currentBoard.Adjacents.Add(currentBoard.CreateStateDown(currentBoard));
-                }
-                if (currentBoard.PossibleMoves == PossibleMoves.LUD.ToString())
-                {
-                    currentBoard.Adjacents.Add(currentBoard.CreateStateLeft(currentBoard));
-                    currentBoard.Adjacents.Add(currentBoard.CreateStateUp(currentBoard));
-                    currentBoard.Adjacents.Add(currentBoard.CreateStateDown(currentBoard));
-                }
-                if (currentBoard.PossibleMoves == PossibleMoves.LRU.ToString())
-                {
-                    currentBoard.Adjacents.Add(currentBoard.CreateStateLeft(currentBoard));
-                    currentBoard.Adjacents.Add(currentBoard.CreateStateRight(currentBoard));
-                    currentBoard.Adjacents.Add(currentBoard.CreateStateUp(currentBoard));
-                }
-                if (currentBoard.PossibleMoves == PossibleMoves.RUD.ToString())
-                {
-                    currentBoard.Adjacents.Add(currentBoard.CreateStateRight(currentBoard));
-                    currentBoard.Adjacents.Add(currentBoard.CreateStateUp(currentBoard));
-                    currentBoard.Adjacents.Add(currentBoard.CreateStateDown(currentBoard));
-                }
-                if (currentBoard.PossibleMoves == PossibleMoves.RD.ToString())
-                {
-                    currentBoard.Adjacents.Add(currentBoard.CreateStateRight(currentBoard));
-                    currentBoard.Adjacents.Add(currentBoard.CreateStateDown(currentBoard));
-                }
-                if (currentBoard.PossibleMoves == PossibleMoves.LD.ToString())
-                {
-                    currentBoard.Adjacents.Add(currentBoard.CreateStateLeft(currentBoard));
-                    currentBoard.Adjacents.Add(currentBoard.CreateStateDown(currentBoard));
-                }
-                if (currentBoard.PossibleMoves == PossibleMoves.LU.ToString())
-                {
-                    currentBoard.Adjacents.Add(currentBoard.CreateStateLeft(currentBoard));
-                    currentBoard.Adjacents.Add(currentBoard.CreateStateUp(currentBoard));
-                }
-                if (currentBoard.PossibleMoves == PossibleMoves.RU.ToString())
-                {
-                    currentBoard.Adjacents.Add(currentBoard.CreateStateRight(currentBoard));
-                    currentBoard.Adjacents.Add(currentBoard.CreateStateUp(currentBoard));
+                    if (currentBoard.CheckIfMoveIsPossible(movesFromParameter[i], possibleMovesFromBoard))
+                    {
+                        currentBoard.Adjacents.Add(currentBoard.CreateStateDependingOnChar(currentBoard, movesFromParameter[i]));
+                    }
                 }
                 foreach (GameBoard board in currentBoard.Adjacents)
                 {
@@ -96,6 +50,5 @@ namespace FifteenPuzzle
             }
             return null;
         }
-       
     }
 }

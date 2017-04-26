@@ -168,14 +168,7 @@ namespace FifteenPuzzle
             }
         }
 
-        public bool IsPuzzleSolved()
-        {
-            return (Puzzles.Rank == solvedPuzzle.Rank &&
-                Enumerable.Range(0, Puzzles.Rank).All(dimension => Puzzles.GetLength(dimension) == solvedPuzzle.GetLength(dimension)) &&
-                Puzzles.Cast<int>().SequenceEqual(solvedPuzzle.Cast<int>()));
-        }
-
-        public GameBoard CreateStateRight(GameBoard board)
+        private GameBoard CreateStateRight(GameBoard board)
         {
             GameBoard newState = new GameBoard();
             newState.ParentBoard = board;
@@ -188,7 +181,7 @@ namespace FifteenPuzzle
             return newState;
         }
 
-        public GameBoard CreateStateLeft(GameBoard board)
+        private GameBoard CreateStateLeft(GameBoard board)
         {
             GameBoard newState = new GameBoard();
             newState.ParentBoard = board;
@@ -201,7 +194,7 @@ namespace FifteenPuzzle
             return newState;
         }
 
-        public GameBoard CreateStateUp(GameBoard board)
+        private GameBoard CreateStateUp(GameBoard board)
         {
             GameBoard newState = new GameBoard();
             newState.ParentBoard = board;
@@ -214,7 +207,7 @@ namespace FifteenPuzzle
             return newState;
         }
 
-        public GameBoard CreateStateDown(GameBoard board)
+        private GameBoard CreateStateDown(GameBoard board)
         {
             GameBoard newState = new GameBoard();
             newState.ParentBoard = board;
@@ -255,6 +248,43 @@ namespace FifteenPuzzle
                 }
             }
             return newArray;
+        }
+
+        public GameBoard CreateStateDependingOnChar(GameBoard board, char direction)
+        {
+            GameBoard newState = null;
+            if (direction == (char)Moves.Left)
+            {
+                newState = CreateStateLeft(board);
+            }
+            if (direction == (char)Moves.Right)
+            {
+                newState = CreateStateRight(board);
+            }
+            if (direction == (char)Moves.Up)
+            {
+                newState = CreateStateUp(board);
+            }
+            if (direction == (char)Moves.Down)
+            {
+                newState = CreateStateDown(board);
+            }
+            return newState;
+        }
+
+        public bool CheckIfMoveIsPossible(char move, char[] possibleMoves)
+        {
+            if (possibleMoves.Contains(move))
+                return true;
+            else
+                return false;
+        }
+
+        public bool IsPuzzleSolved()
+        {
+            return (Puzzles.Rank == solvedPuzzle.Rank &&
+                Enumerable.Range(0, Puzzles.Rank).All(dimension => Puzzles.GetLength(dimension) == solvedPuzzle.GetLength(dimension)) &&
+                Puzzles.Cast<int>().SequenceEqual(solvedPuzzle.Cast<int>()));
         }
     }
 }
