@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FifteenPuzzle
 {
-    public class BFS 
+    public class BFS
     {
         public GameBoard InitialBoard { get; set; }
 
