@@ -8,11 +8,11 @@ namespace FifteenPuzzle
 {
     public class BFS
     {
-        public GameBoard InitialBoard { get; set; }
+        private GameBoard initialBoard;
 
         public BFS(string filePath)
         {
-            InitialBoard = new GameBoard(filePath);
+            initialBoard = new GameBoard(filePath);
         }
 
         public Solution Search(string moves)
@@ -20,16 +20,16 @@ namespace FifteenPuzzle
             char[] movesFromParameter = moves.ToCharArray();
             char[] possibleMovesFromBoard;
                  
-            int numberofIteretions = 0;
             Solution solution = new Solution();
             Queue<GameBoard> queue = new Queue<GameBoard>();
-            queue.Enqueue(InitialBoard);
+            queue.Enqueue(initialBoard);
             while (queue.Count > 0)
             {
                 GameBoard currentBoard = queue.Dequeue();
                 solution.board = currentBoard;
                 solution.NumberOfMoves = currentBoard.MovesMade.Length;
                 solution.MovesMade = currentBoard.MovesMade;
+
                 if (currentBoard.IsPuzzleSolved())
                 {
                     return solution;
@@ -47,10 +47,10 @@ namespace FifteenPuzzle
                 {
                     queue.Enqueue(board);
                 }
-                numberofIteretions++;
-                //Console.WriteLine(numberofIteretions);
             }
-            return null;
+            solution.NumberOfMoves = -1;
+            solution.MovesMade = String.Empty;
+            return solution;
         }
     }
 }

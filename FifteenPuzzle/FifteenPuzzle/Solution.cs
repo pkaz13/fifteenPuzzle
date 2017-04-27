@@ -11,17 +11,14 @@ namespace FifteenPuzzle
         public GameBoard board { get; set; }
         public int NumberOfMoves { get; set; }
         public string MovesMade { get; set; }
+        public int MaxDepthOfRecursion { get; set; }
 
         public Solution()
         {
+            board = null;
             NumberOfMoves = 0;
             MovesMade = "";
-        }
-
-        public void ProcessResult()
-        {
-            NumberOfMoves = NumberOfMoves - 1;
-            MovesMade = MovesMade.Remove(0, 1);
+            MaxDepthOfRecursion = 0;
         }
     }
 }

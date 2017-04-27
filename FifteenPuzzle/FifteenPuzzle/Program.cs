@@ -15,57 +15,46 @@ namespace FifteenPuzzle
 
             GameBoard board = new GameBoard(filePath);
 
-            BFS bfs = new BFS(filePath);
+            //BFS bfs = new BFS(filePath);
 
-            //GameBoard solved = bfs.Search();
-            Solution solution = bfs.Search("RUDL");
-            
-            //solution.ProccesResult();
-            //Console.WriteLine(solution.NumberOfMoves);
-            //Console.WriteLine();
-            //Console.WriteLine(solution.MovesMade);
-            //solution.ProcessResult();
-            FileHelper.SaveSolution(solution.NumberOfMoves, solution.MovesMade);
+            //int startBFS = Environment.TickCount;
+            //Solution solutionBFS = bfs.Search("RUDL");
+            //int stopBFS = Environment.TickCount - startBFS;
+            //var timespanBFS = TimeSpan.FromMilliseconds(stopBFS);
 
-            for (int i = 0; i < 4; i++)
-            {
-                for (int j = 0; j < 4; j++)
-                {
-                    Console.Write(string.Format("{0} ", solution.board.Puzzles[i, j]));
-                }
-                Console.Write(Environment.NewLine + Environment.NewLine);
-            }
-
-            //GameBoard board1 = board.CreateStateLeft(board);
+            //FileHelper.SaveSolution(solutionBFS.NumberOfMoves, solutionBFS.MovesMade);
 
             //for (int i = 0; i < 4; i++)
             //{
             //    for (int j = 0; j < 4; j++)
             //    {
-            //        Console.Write(string.Format("{0} ", board1.Puzzles[i, j]));
+            //        Console.Write(string.Format("{0} ", solutionBFS.board.Puzzles[i, j]));
             //    }
             //    Console.Write(Environment.NewLine + Environment.NewLine);
             //}
 
-            //BFS bfs = new BFS();
+            //Console.WriteLine(timespanBFS);
+            //Console.WriteLine(solutionBFS.MaxDepthOfRecursion);
 
-            //if (board.IsPuzzleSolved() == true)
-            //    Console.WriteLine("solved");
-            //else
-            //    Console.WriteLine("not solved");
+            Console.WriteLine("--------------------------------");
 
-            //int[] tab = bfs.CheckFreeSpacePosition(board.Puzzles);
-            //for (int i = 0; i < tab.Length; i++)
-            //{
-            //    Console.WriteLine(tab[i]);
-            //}
+            DFS dfs = new DFS(filePath);
+            double startDFS = Environment.TickCount;
+            Solution solutionDFS = dfs.Search("RUDL");
+            double stopDFS = Environment.TickCount - startDFS;
+            FileHelper.SaveSolution(solutionDFS.NumberOfMoves, solutionDFS.MovesMade);
 
-            //string moves = bfs.CheckPossibleMoves(board.Puzzles);
-            //Console.Write(moves);
-            //for (int i = 0; i < moves.Length; i++)
-            //{
-            //    Console.Write(moves);
-            //}
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    Console.Write(string.Format("{0} ", solutionDFS.board.Puzzles[i, j]));
+                }
+                Console.Write(Environment.NewLine + Environment.NewLine);
+            }
+            Console.WriteLine(stopDFS);
+            //Console.WriteLine(solutionDFS.MaxDepthOfRecursion);
+
 
             Console.ReadKey();
 

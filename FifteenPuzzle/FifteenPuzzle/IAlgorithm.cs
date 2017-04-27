@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 namespace FifteenPuzzle
 {
     public interface IAlgorithm
-    {    
-        void Search();
+    {
+        int MaxDepthOfRecursion { get; set; }
+
+        Solution Search(string moves);
     }
 }

@@ -22,6 +22,8 @@ namespace FifteenPuzzle
 
         public string MovesMade { get; set; }
 
+        public int Depth { get; set; }
+
         private int[,] solvedPuzzle;
 
         private const string solvedFilePath = @"../../../solved.txt";
@@ -292,6 +294,19 @@ namespace FifteenPuzzle
             return (Puzzles.Rank == solvedPuzzle.Rank &&
                 Enumerable.Range(0, Puzzles.Rank).All(dimension => Puzzles.GetLength(dimension) == solvedPuzzle.GetLength(dimension)) &&
                 Puzzles.Cast<int>().SequenceEqual(solvedPuzzle.Cast<int>()));
+        }
+
+        public int GetDepthOfState()
+        {
+            GameBoard temp = this;
+            int depth = 0;
+            while (temp.ParentBoard != null)
+            {
+                depth++;
+                temp = temp.ParentBoard;
+            }
+            Depth = depth;
+            return depth;
         }
     }
 }

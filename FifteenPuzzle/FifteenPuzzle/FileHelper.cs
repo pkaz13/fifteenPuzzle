@@ -71,6 +71,21 @@ namespace FifteenPuzzle
             File.AppendAllText(@"../../../solution.txt", Environment.NewLine);
             File.AppendAllText(@"../../../solution.txt", movesMade);
         }
+
+        public static void SaveStats(int numberOfMoves, int numberOfStatesVisited, int maxDepthOfRecursion, double time)
+        {
+            if (File.Exists(@"../../../stats.txt"))
+            {
+                File.Delete(@"../../../stats.txt");
+            }
+            File.AppendAllText(@"../../../stats.txt", numberOfMoves.ToString());
+            File.AppendAllText(@"../../../stats.txt", Environment.NewLine);
+            File.AppendAllText(@"../../../stats.txt", numberOfStatesVisited.ToString());
+            File.AppendAllText(@"../../../stats.txt", Environment.NewLine);
+            File.AppendAllText(@"../../../stats.txt", maxDepthOfRecursion.ToString());
+            File.AppendAllText(@"../../../stats.txt", Environment.NewLine);
+            File.AppendAllText(@"../../../stats.txt", time.ToString());
+        }
     }
 }
 
