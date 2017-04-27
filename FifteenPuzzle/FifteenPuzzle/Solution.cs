@@ -17,5 +17,11 @@ namespace FifteenPuzzle
             NumberOfMoves = 0;
             MovesMade = "";
         }
+
+        public void ProcessResult()
+        {
+            NumberOfMoves = NumberOfMoves - 1;
+            MovesMade = MovesMade.Remove(0, 1);
+        }
     }
 }

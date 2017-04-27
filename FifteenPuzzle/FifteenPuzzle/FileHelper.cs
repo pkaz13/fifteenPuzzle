@@ -63,13 +63,13 @@ namespace FifteenPuzzle
 
         public static void SaveSolution(int numberOfMoves, string movesMade)
         {
-            if (File.Exists(@"../../../ 4x4_01_0001_bfs_rdul_sol.txt"))
+            if (File.Exists(@"../../../solution.txt"))
             {
-                File.Delete(@"../../../ 4x4_01_0001_bfs_rdul_sol.txt");
+                File.Delete(@"../../../solution.txt");
             }
-            File.AppendAllText(@"../../../ 4x4_01_0001_bfs_rdul_sol.txt", numberOfMoves.ToString());
-            File.AppendAllText(@"../../../ 4x4_01_0001_bfs_rdul_sol.txt", Environment.NewLine);
-            File.AppendAllText(@"../../../ 4x4_01_0001_bfs_rdul_sol.txt", movesMade);
+            File.AppendAllText(@"../../../solution.txt", numberOfMoves.ToString());
+            File.AppendAllText(@"../../../solution.txt", Environment.NewLine);
+            File.AppendAllText(@"../../../solution.txt", movesMade);
         }
     }
 }

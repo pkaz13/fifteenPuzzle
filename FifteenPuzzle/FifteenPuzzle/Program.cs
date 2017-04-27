@@ -19,11 +19,13 @@ namespace FifteenPuzzle
 
             //GameBoard solved = bfs.Search();
             Solution solution = bfs.Search("RUDL");
+            
             //solution.ProccesResult();
-            //Console.Write(solution.NumberOfMoves);
+            //Console.WriteLine(solution.NumberOfMoves);
             //Console.WriteLine();
-            //Console.Write(solution.MovesMade);
-            //FileHelper.SaveSolution(solution.NumberOfMoves, solution.MovesMade);
+            //Console.WriteLine(solution.MovesMade);
+            //solution.ProcessResult();
+            FileHelper.SaveSolution(solution.NumberOfMoves, solution.MovesMade);
 
             for (int i = 0; i < 4; i++)
             {

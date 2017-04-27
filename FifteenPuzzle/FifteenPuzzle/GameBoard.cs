@@ -20,6 +20,8 @@ namespace FifteenPuzzle
 
         public int[,] Puzzles { get; set; }
 
+        public string MovesMade { get; set; }
+
         private int[,] solvedPuzzle;
 
         private const string solvedFilePath = @"../../../solved.txt";
@@ -37,6 +39,7 @@ namespace FifteenPuzzle
             solvedPuzzle = FileHelper.InitBoard(solvedFilePath);
             FreeSpacePosition = new int[2];
             Adjacents = new List<GameBoard>();
+            MovesMade = "";
             SetFreeSpacePosition();
             SetPossibleMoves();
         }
@@ -168,55 +171,59 @@ namespace FifteenPuzzle
             }
         }
 
-        private GameBoard CreateStateRight(GameBoard board)
+        private GameBoard CreateStateRight()
         {
             GameBoard newState = new GameBoard();
-            newState.ParentBoard = board;
-            newState.Puzzles = CopyValues(board.Puzzles);
-            newState.FreeSpacePosition = SetFreeSpacePosition(board.Puzzles);
+            newState.ParentBoard = this;
+            newState.Puzzles = CopyValues(this.Puzzles);
+            newState.FreeSpacePosition = SetFreeSpacePosition(this.Puzzles);
             newState.SwapRight();
             newState.Move = (char)Moves.Right;
             newState.SetFreeSpacePosition();
             newState.SetPossibleMoves();
+            newState.MovesMade = this.MovesMade + 'R';
             return newState;
         }
 
-        private GameBoard CreateStateLeft(GameBoard board)
+        private GameBoard CreateStateLeft()
         {
             GameBoard newState = new GameBoard();
-            newState.ParentBoard = board;
-            newState.Puzzles = CopyValues(board.Puzzles);
-            newState.FreeSpacePosition = SetFreeSpacePosition(board.Puzzles);
+            newState.ParentBoard = this;
+            newState.Puzzles = CopyValues(this.Puzzles);
+            newState.FreeSpacePosition = SetFreeSpacePosition(this.Puzzles);
             newState.SwapLeft();
             newState.Move = (char)Moves.Left;
             newState.SetFreeSpacePosition();
             newState.SetPossibleMoves();
+            newState.MovesMade = this.MovesMade + 'L';
             return newState;
         }
 
-        private GameBoard CreateStateUp(GameBoard board)
+        private GameBoard CreateStateUp()
         {
             GameBoard newState = new GameBoard();
-            newState.ParentBoard = board;
-            newState.Puzzles = CopyValues(board.Puzzles);
-            newState.FreeSpacePosition = SetFreeSpacePosition(board.Puzzles);
+            newState.ParentBoard = this;
+            newState.Puzzles = CopyValues(this.Puzzles);
+            newState.FreeSpacePosition = SetFreeSpacePosition(this.Puzzles);
             newState.SwapUp();
             newState.Move = (char)Moves.Up;
             newState.SetFreeSpacePosition();
             newState.SetPossibleMoves();
+            newState.MovesMade = this.MovesMade + 'U';
             return newState;
         }
 
-        private GameBoard CreateStateDown(GameBoard board)
+        private GameBoard CreateStateDown()
         {
             GameBoard newState = new GameBoard();
-            newState.ParentBoard = board;
-            newState.Puzzles = CopyValues(board.Puzzles);
-            newState.FreeSpacePosition = SetFreeSpacePosition(board.Puzzles);
+            newState.ParentBoard = this;
+            newState.Puzzles = CopyValues(this.Puzzles);
+            newState.FreeSpacePosition = SetFreeSpacePosition(this.Puzzles);
             newState.SwapDown();
             newState.Move = (char)Moves.Down;
             newState.SetFreeSpacePosition();
             newState.SetPossibleMoves();
+            newState.MovesMade = this.MovesMade + 'D';
             return newState;
         }
 
@@ -250,24 +257,24 @@ namespace FifteenPuzzle
             return newArray;
         }
 
-        public GameBoard CreateStateDependingOnChar(GameBoard board, char direction)
+        public GameBoard CreateStateDependingOnChar(char direction)
         {
             GameBoard newState = null;
             if (direction == (char)Moves.Left)
             {
-                newState = CreateStateLeft(board);
+                newState = CreateStateLeft();
             }
             if (direction == (char)Moves.Right)
             {
-                newState = CreateStateRight(board);
+                newState = CreateStateRight();
             }
             if (direction == (char)Moves.Up)
             {
-                newState = CreateStateUp(board);
+                newState = CreateStateUp();
             }
             if (direction == (char)Moves.Down)
             {
-                newState = CreateStateDown(board);
+                newState = CreateStateDown();
             }
             return newState;
         }

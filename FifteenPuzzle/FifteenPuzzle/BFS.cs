@@ -28,6 +28,8 @@ namespace FifteenPuzzle
             {
                 GameBoard currentBoard = queue.Dequeue();
                 solution.board = currentBoard;
+                solution.NumberOfMoves = currentBoard.MovesMade.Length;
+                solution.MovesMade = currentBoard.MovesMade;
                 if (currentBoard.IsPuzzleSolved())
                 {
                     return solution;
@@ -38,7 +40,7 @@ namespace FifteenPuzzle
                 {
                     if (currentBoard.CheckIfMoveIsPossible(movesFromParameter[i], possibleMovesFromBoard))
                     {
-                        currentBoard.Adjacents.Add(currentBoard.CreateStateDependingOnChar(currentBoard, movesFromParameter[i]));
+                        currentBoard.Adjacents.Add(currentBoard.CreateStateDependingOnChar(movesFromParameter[i]));
                     }
                 }
                 foreach (GameBoard board in currentBoard.Adjacents)
@@ -46,7 +48,7 @@ namespace FifteenPuzzle
                     queue.Enqueue(board);
                 }
                 numberofIteretions++;
-                Console.WriteLine(numberofIteretions);
+                //Console.WriteLine(numberofIteretions);
             }
             return null;
         }
