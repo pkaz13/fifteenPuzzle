@@ -42,7 +42,7 @@ namespace FifteenPuzzle
             double startDFS = Environment.TickCount;
             Solution solutionDFS = dfs.Search("RUDL");
             double stopDFS = Environment.TickCount - startDFS;
-            FileHelper.SaveSolution(solutionDFS.NumberOfMoves, solutionDFS.MovesMade);
+            //FileHelper.SaveSolution(solutionDFS.NumberOfMoves, solutionDFS.MovesMade);
 
             for (int i = 0; i < 4; i++)
             {

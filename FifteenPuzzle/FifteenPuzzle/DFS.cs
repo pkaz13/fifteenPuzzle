@@ -8,7 +8,7 @@ namespace FifteenPuzzle
 {
     public class DFS
     {
-        public GameBoard InitialBoard { get; set; }
+        private GameBoard initialBoard;
 
         public int MaxDepthOfRecursion { get; set; }
 
@@ -16,30 +16,30 @@ namespace FifteenPuzzle
 
         public DFS(string filepath)
         {
-            InitialBoard = new GameBoard(filepath);
+            initialBoard = new GameBoard(filepath);
         }
 
         public Solution Search(string moves)
         {
-            int depthOfRecursion = 0;
-            Solution solution = new Solution();
             char[] movesFromParameter = moves.ToCharArray();
             char[] possibleMovesFromBoard;
+            int depthOfRecursion = 0;
 
+            Solution solution = new Solution();
             Stack<GameBoard> stack = new Stack<GameBoard>();
-            stack.Push(InitialBoard);
+            stack.Push(initialBoard);
 
             while (stack.Count > 0)
             {
                 GameBoard currentBoard = stack.Pop();
+
+                possibleMovesFromBoard = currentBoard.PossibleMoves.ToCharArray();
+                depthOfRecursion = currentBoard.GetDepthOfState();
+
                 solution.board = currentBoard;
                 solution.NumberOfMoves = currentBoard.MovesMade.Length;
                 solution.MovesMade = currentBoard.MovesMade;
                 solution.MaxDepthOfRecursion = MaxDepthOfRecursion;
-
-                possibleMovesFromBoard = currentBoard.PossibleMoves.ToCharArray();
-
-                depthOfRecursion = currentBoard.GetDepthOfState();
 
                 if (currentBoard.Depth > maxDepthOfRecursion)
                 {

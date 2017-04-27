@@ -26,6 +26,9 @@ namespace FifteenPuzzle
             while (queue.Count > 0)
             {
                 GameBoard currentBoard = queue.Dequeue();
+
+                possibleMovesFromBoard = currentBoard.PossibleMoves.ToCharArray();
+
                 solution.board = currentBoard;
                 solution.NumberOfMoves = currentBoard.MovesMade.Length;
                 solution.MovesMade = currentBoard.MovesMade;
@@ -34,8 +37,7 @@ namespace FifteenPuzzle
                 {
                     return solution;
                 }
-                possibleMovesFromBoard = currentBoard.PossibleMoves.ToCharArray();
-
+                
                 for (int i = 0; i < movesFromParameter.Length; i++)
                 {
                     if (currentBoard.CheckIfMoveIsPossible(movesFromParameter[i], possibleMovesFromBoard))
