@@ -308,5 +308,59 @@ namespace FifteenPuzzle
             Depth = depth;
             return depth;
         }
+
+        public int HammingDistance()
+        {
+            int distance = 0;
+
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    if (Puzzles[i, j] != solvedPuzzle[i, j])
+                        distance++;
+                }
+            }
+            return distance;
+        }
+
+        public int ManhattanDistance()
+        {
+            int distance = 0;
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    int NoOnBoard = Puzzles[i, j];
+                    if (NoOnBoard != 0)
+                    {
+                        int targetI = (NoOnBoard - 1) / 4; //expected row coordinate
+                        int targetJ = (NoOnBoard - 1) / 4; //expected column coordinate
+                        int di = i - targetI;   //distance to expected row coordinate
+                        int dj = j - targetJ;   //distance to expected column coordinate
+                        distance += Math.Abs(di) + Math.Abs(dj);
+                    }
+                }
+            }
+            return distance;
+
+        }
+
+        private int[] FindSpecificNumber(int number)
+        {
+            int[] foundNoPosition = new int[2];
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    if (Puzzles[i,j] == number)
+                    {
+                        foundNoPosition[0] = i;
+                        foundNoPosition[1] = j;
+                    }
+                }
+            }
+            return foundNoPosition;
+        }
     }
 }
