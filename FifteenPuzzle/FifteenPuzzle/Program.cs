@@ -10,7 +10,7 @@ namespace FifteenPuzzle
     {
         static void Main(string[] args)
         {
-            string filePath = @"../../../4x4_03_00007.txt";
+            string filePath = @"../../../4x4_01_00002.txt";
             string solvedfilePath = @"../../../solved.txt";
 
             GameBoard board = new GameBoard(filePath);
@@ -38,22 +38,49 @@ namespace FifteenPuzzle
 
             Console.WriteLine("--------------------------------");
 
-            DFS dfs = new DFS(filePath);
-            double startDFS = Environment.TickCount;
-            Solution solutionDFS = dfs.Search("RUDL");
-            double stopDFS = Environment.TickCount - startDFS;
-            //FileHelper.SaveSolution(solutionDFS.NumberOfMoves, solutionDFS.MovesMade);
+            //DFS dfs = new DFS(filePath);
+            //double startDFS = Environment.TickCount;
+            //Solution solutionDFS = dfs.Search("RUDL");
+            //double stopDFS = Environment.TickCount - startDFS;
+            ////FileHelper.SaveSolution(solutionDFS.NumberOfMoves, solutionDFS.MovesMade);
+
+            //for (int i = 0; i < 4; i++)
+            //{
+            //    for (int j = 0; j < 4; j++)
+            //    {
+            //        Console.Write(string.Format("{0} ", solutionDFS.board.Puzzles[i, j]));
+            //    }
+            //    Console.Write(Environment.NewLine + Environment.NewLine);
+            //}
+            //Console.WriteLine(stopDFS);
+            //Console.WriteLine(solutionDFS.MaxDepthOfRecursion);
+
+            AStar aStar = new AStar();
+            GameBoardHeuristic solved = aStar.Search(filePath);
 
             for (int i = 0; i < 4; i++)
             {
                 for (int j = 0; j < 4; j++)
                 {
-                    Console.Write(string.Format("{0} ", solutionDFS.board.Puzzles[i, j]));
+                    Console.Write(string.Format("{0} ", board.Puzzles[i, j]));
                 }
                 Console.Write(Environment.NewLine + Environment.NewLine);
             }
-            Console.WriteLine(stopDFS);
-            //Console.WriteLine(solutionDFS.MaxDepthOfRecursion);
+            Console.WriteLine();
+
+            if (solved == null)
+                Console.WriteLine("brak");
+            else
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    for (int j = 0; j < 4; j++)
+                    {
+                        Console.Write(string.Format("{0} ", solved.Puzzles[i, j]));
+                    }
+                    Console.Write(Environment.NewLine + Environment.NewLine);
+                }
+            }
 
 
             Console.ReadKey();

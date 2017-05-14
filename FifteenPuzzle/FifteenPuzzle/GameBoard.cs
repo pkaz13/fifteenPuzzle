@@ -28,11 +28,17 @@ namespace FifteenPuzzle
 
         private const string solvedFilePath = @"../../../solved.txt";
 
+        public int G { get; set; }
+
+        public int F { get; set; }
+
         public GameBoard()
         {
             FreeSpacePosition = new int[2];
             Adjacents = new List<GameBoard>();
             solvedPuzzle = FileHelper.InitBoard(solvedFilePath);
+            G = 0;
+            F = 0;
         }
 
         public GameBoard(string initialFilePath)
@@ -44,6 +50,8 @@ namespace FifteenPuzzle
             MovesMade = "";
             SetFreeSpacePosition();
             SetPossibleMoves();
+            G = 0;
+            F = 0;
         }
 
         private void SwapUp()   
@@ -170,6 +178,70 @@ namespace FifteenPuzzle
                 possibleMoves[0] = (char)Moves.Right;
                 possibleMoves[1] = (char)Moves.Up;
                 PossibleMoves = new string(possibleMoves);  //RU
+            }
+        }
+
+        public void CreatePossibleStates()
+        {
+            if ((FreeSpacePosition[0] == 1 && FreeSpacePosition[1] == 1) || (FreeSpacePosition[0] == 1 && FreeSpacePosition[1] == 2) ||
+                (FreeSpacePosition[0] == 2 && FreeSpacePosition[1] == 1) || (FreeSpacePosition[0] == 2 && FreeSpacePosition[1] == 2))
+            {
+                Adjacents.Add(CreateStateLeft());
+                Adjacents.Add(CreateStateRight());
+                Adjacents.Add(CreateStateUp());
+                Adjacents.Add(CreateStateDown());   //LRUD
+            }
+
+            if ((FreeSpacePosition[0] == 0 && FreeSpacePosition[1] == 1) || (FreeSpacePosition[0] == 0 && FreeSpacePosition[1] == 2))
+            {
+                Adjacents.Add(CreateStateLeft());
+                Adjacents.Add(CreateStateRight());
+                Adjacents.Add(CreateStateDown());   //LRD
+            }
+
+            if ((FreeSpacePosition[0] == 1 && FreeSpacePosition[1] == 3) || (FreeSpacePosition[0] == 2 && FreeSpacePosition[1] == 3))
+            {
+                Adjacents.Add(CreateStateLeft());
+                Adjacents.Add(CreateStateUp());
+                Adjacents.Add(CreateStateDown());   //LUD
+            }
+
+            if ((FreeSpacePosition[0] == 3 && FreeSpacePosition[1] == 1) || (FreeSpacePosition[0] == 3 && FreeSpacePosition[1] == 2))
+            {
+                Adjacents.Add(CreateStateLeft());
+                Adjacents.Add(CreateStateRight());
+                Adjacents.Add(CreateStateUp()); //LRU
+            }
+
+            if ((FreeSpacePosition[0] == 1 && FreeSpacePosition[1] == 0) || (FreeSpacePosition[0] == 2 && FreeSpacePosition[1] == 0))
+            {
+                Adjacents.Add(CreateStateRight());
+                Adjacents.Add(CreateStateUp());
+                Adjacents.Add(CreateStateDown());   //RUD
+            }
+
+            if (FreeSpacePosition[0] == 0 && FreeSpacePosition[1] == 0)
+            {
+                Adjacents.Add(CreateStateRight());
+                Adjacents.Add(CreateStateDown());   //RD
+            }
+
+            if (FreeSpacePosition[0] == 0 && FreeSpacePosition[1] == 3)
+            {
+                Adjacents.Add(CreateStateLeft());
+                Adjacents.Add(CreateStateDown());   //LD
+            }
+
+            if (FreeSpacePosition[0] == 3 && FreeSpacePosition[1] == 3)
+            {
+                Adjacents.Add(CreateStateLeft());
+                Adjacents.Add(CreateStateUp()); //LU
+            }
+
+            if (FreeSpacePosition[0] == 3 && FreeSpacePosition[1] == 0)
+            {
+                Adjacents.Add(CreateStateRight());
+                Adjacents.Add(CreateStateUp()); //RU
             }
         }
 
@@ -343,7 +415,6 @@ namespace FifteenPuzzle
                 }
             }
             return distance;
-
         }
 
         private int[] FindSpecificNumber(int number)

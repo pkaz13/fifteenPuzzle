@@ -42,9 +42,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AStar.cs" />
     <Compile Include="BFS.cs" />
     <Compile Include="DFS.cs" />
     <Compile Include="FileHelper.cs" />
+    <Compile Include="GameBoardHeuristic.cs" />
     <Compile Include="IAlgorithm.cs" />
     <Compile Include="Moves.cs" />
     <Compile Include="PossibleMoves.cs" />
