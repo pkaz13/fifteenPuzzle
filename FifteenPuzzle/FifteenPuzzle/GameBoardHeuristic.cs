@@ -17,6 +17,7 @@ namespace FifteenPuzzle
 
         public int PathCost { get; set; }
         public int HeuristicValue { get; set; }
+        public int F { get; set; }
 
         public GameBoardHeuristic(string filePath)
         {
@@ -89,7 +90,7 @@ namespace FifteenPuzzle
                 return true;
             }
             //move right
-            if (direction == 1 && EmptyRow < 3)
+            if (direction == 1 && EmptyCol < 3)
             {
                 int temp = Puzzles[EmptyRow, EmptyCol];
                 Puzzles[EmptyRow, EmptyCol] = Puzzles[EmptyRow, EmptyCol + 1];
@@ -107,12 +108,12 @@ namespace FifteenPuzzle
                 return true;
             }
             //move left
-            if (direction == 3 && EmptyRow > 0)
+            if (direction == 3 && EmptyCol > 0)
             {
                 int temp = Puzzles[EmptyRow, EmptyCol];
                 Puzzles[EmptyRow, EmptyCol] = Puzzles[EmptyRow, EmptyCol - 1];
                 Puzzles[EmptyRow, EmptyCol - 1] = temp;
-                EmptyCol++;
+                EmptyCol--;
                 return true;
             }
             return false;
@@ -133,6 +134,7 @@ namespace FifteenPuzzle
             copiedBoard.EmptyCol = EmptyCol;
             copiedBoard.PathCost = PathCost;
             copiedBoard.HeuristicValue = HeuristicValue;
+            copiedBoard.CountF();
             return copiedBoard;
         }
 
@@ -154,20 +156,20 @@ namespace FifteenPuzzle
             return false;
         }
 
-        public bool CompareTo(GameBoardHeuristic heuristic)
-        {
-            int mine = CountF();
-            int yours = heuristic.CountF();
+        //public bool CompareTo(GameBoardHeuristic heuristic)
+        //{
+        //    int mine = CountF();
+        //    int yours = heuristic.CountF();
 
-            if (mine <= yours)
-                return true;
-            else
-                return false;
-        }
+        //    if (mine <= yours)
+        //        return true;
+        //    else
+        //        return false;
+        //}
 
-        public int CountF()
+        public void CountF()
         {
-            return PathCost + HeuristicValue;
+            F = PathCost + HeuristicValue;
         }
 
         private void SetFreeSpacePosition()

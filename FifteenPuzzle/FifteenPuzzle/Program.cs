@@ -10,7 +10,7 @@ namespace FifteenPuzzle
     {
         static void Main(string[] args)
         {
-            string filePath = @"../../../4x4_01_00002.txt";
+            string filePath = @"../../../4x4_03_00007.txt";
             string solvedfilePath = @"../../../solved.txt";
 
             GameBoard board = new GameBoard(filePath);

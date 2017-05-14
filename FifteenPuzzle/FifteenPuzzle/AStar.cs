@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Priority_Queue;
 
 namespace FifteenPuzzle
 {
@@ -12,15 +13,14 @@ namespace FifteenPuzzle
         public GameBoardHeuristic Search(string filePath)
         {
             GameBoardHeuristic initialBoard = new GameBoardHeuristic(filePath);
-            List<GameBoardHeuristic> open = new List<GameBoardHeuristic>();
+            SimplePriorityQueue<GameBoardHeuristic> pq = new SimplePriorityQueue<GameBoardHeuristic>();
             List<GameBoardHeuristic> closed = new List<GameBoardHeuristic>();
 
-            open.Add(new GameBoardHeuristic(initialBoard));
+            pq.Enqueue(initialBoard, initialBoard.F);
 
-            while (open.Count > 0)
+            while (pq.Count > 0)
             {
-                int minF = open.Select(x => x.CountF()).Min();
-                GameBoardHeuristic currentBoard = open.FirstOrDefault(x => x.CountF() == minF);
+                GameBoardHeuristic currentBoard = pq.Dequeue();
 
                 if (currentBoard.IsPuzzleSolved())
                     return currentBoard;
@@ -33,7 +33,7 @@ namespace FifteenPuzzle
                     if (!closed.Contains(moved))
                     {
                         closed.Add(moved);
-                        open.Add(moved);
+                        pq.Enqueue(moved, moved.F);
                     }
                 }
             }
