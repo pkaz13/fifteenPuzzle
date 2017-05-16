@@ -134,7 +134,6 @@ namespace FifteenPuzzle
             copiedBoard.EmptyCol = EmptyCol;
             copiedBoard.PathCost = PathCost;
             copiedBoard.HeuristicValue = HeuristicValue;
-            copiedBoard.CountF();
             return copiedBoard;
         }
 
@@ -151,6 +150,7 @@ namespace FifteenPuzzle
             {
                 PathCost++;
                 ManhattanDistance();
+                CountF();
                 return true;
             }
             return false;

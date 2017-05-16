@@ -28,7 +28,7 @@ namespace FifteenPuzzle
                 for (int i = 0; i < 4; i++)
                 {
                     GameBoardHeuristic moved = currentBoard.Copy(filePath);
-                    if (!moved.Move(i))
+                    if (!moved.MoveCountingPathCost(i))
                         continue;
                     if (!closed.Contains(moved))
                     {
