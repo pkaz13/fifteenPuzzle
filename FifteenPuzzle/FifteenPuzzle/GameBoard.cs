@@ -32,13 +32,15 @@ namespace FifteenPuzzle
 
         public int F { get; set; }
 
+        public int H { get; set; }
+
         public GameBoard()
         {
             FreeSpacePosition = new int[2];
             Adjacents = new List<GameBoard>();
             solvedPuzzle = FileHelper.InitBoard(solvedFilePath);
             G = 0;
-            F = 0;
+            H = 0;
         }
 
         public GameBoard(string initialFilePath)
@@ -51,7 +53,7 @@ namespace FifteenPuzzle
             SetFreeSpacePosition();
             SetPossibleMoves();
             G = 0;
-            F = 0;
+            ManhattanDistance();
         }
 
         private void SwapUp()   
@@ -256,6 +258,11 @@ namespace FifteenPuzzle
             newState.SetFreeSpacePosition();
             newState.SetPossibleMoves();
             newState.MovesMade = this.MovesMade + 'R';
+            newState.G = G;
+            newState.H = H;
+            newState.CountF();
+            newState.G++;
+            newState.ManhattanDistance();
             return newState;
         }
 
@@ -396,25 +403,44 @@ namespace FifteenPuzzle
             return distance;
         }
 
-        public int ManhattanDistance()
+        //public int ManhattanDistance()
+        //{
+        //    int distance = 0;
+        //    for (int i = 0; i < 4; i++)
+        //    {
+        //        for (int j = 0; j < 4; j++)
+        //        {
+        //            int NoOnBoard = Puzzles[i, j];
+        //            if (NoOnBoard != 0)
+        //            {
+        //                int targetI = (NoOnBoard - 1) / 4; //expected row coordinate
+        //                int targetJ = (NoOnBoard - 1) / 4; //expected column coordinate
+        //                int di = i - targetI;   //distance to expected row coordinate
+        //                int dj = j - targetJ;   //distance to expected column coordinate
+        //                distance += Math.Abs(di) + Math.Abs(dj);
+        //            }
+        //        }
+        //    }
+        //    return distance;
+        //}
+        public void ManhattanDistance()
         {
-            int distance = 0;
+            H = 0;
+            int count = 1;
             for (int i = 0; i < 4; i++)
             {
                 for (int j = 0; j < 4; j++)
                 {
-                    int NoOnBoard = Puzzles[i, j];
-                    if (NoOnBoard != 0)
-                    {
-                        int targetI = (NoOnBoard - 1) / 4; //expected row coordinate
-                        int targetJ = (NoOnBoard - 1) / 4; //expected column coordinate
-                        int di = i - targetI;   //distance to expected row coordinate
-                        int dj = j - targetJ;   //distance to expected column coordinate
-                        distance += Math.Abs(di) + Math.Abs(dj);
-                    }
+                    if (count == 16)
+                        continue;
+
+                    int[] position = FindSpecificNumber(count);
+                    H += Math.Abs(i - position[0]) + Math.Abs(j - position[1]);
+                    count++;
                 }
             }
-            return distance;
+            int[] positionFreeSpace = FindSpecificNumber(0);
+            H += Math.Abs(3 - positionFreeSpace[0]) + Math.Abs(3 - positionFreeSpace[1]);
         }
 
         private int[] FindSpecificNumber(int number)
@@ -432,6 +458,11 @@ namespace FifteenPuzzle
                 }
             }
             return foundNoPosition;
+        }
+
+        public void CountF()
+        {
+            F = G + H;
         }
     }
 }
