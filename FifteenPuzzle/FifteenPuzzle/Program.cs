@@ -14,6 +14,7 @@ namespace FifteenPuzzle
             string solvedfilePath = @"../../../solved.txt";
 
             GameBoard board = new GameBoard(filePath);
+            board.CreatePossibleStates();
 
             //BFS bfs = new BFS(filePath);
 
@@ -81,6 +82,8 @@ namespace FifteenPuzzle
                     Console.Write(Environment.NewLine + Environment.NewLine);
                 }
             }
+
+
 
 
             Console.ReadKey();

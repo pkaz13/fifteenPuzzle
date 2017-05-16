@@ -260,9 +260,9 @@ namespace FifteenPuzzle
             newState.MovesMade = this.MovesMade + 'R';
             newState.G = G;
             newState.H = H;
-            newState.CountF();
             newState.G++;
             newState.ManhattanDistance();
+            newState.CountF();
             return newState;
         }
 
@@ -277,6 +277,11 @@ namespace FifteenPuzzle
             newState.SetFreeSpacePosition();
             newState.SetPossibleMoves();
             newState.MovesMade = this.MovesMade + 'L';
+            newState.G = G;
+            newState.H = H;
+            newState.G++;
+            newState.ManhattanDistance();
+            newState.CountF();
             return newState;
         }
 
@@ -291,6 +296,11 @@ namespace FifteenPuzzle
             newState.SetFreeSpacePosition();
             newState.SetPossibleMoves();
             newState.MovesMade = this.MovesMade + 'U';
+            newState.G = G;
+            newState.H = H;
+            newState.G++;
+            newState.ManhattanDistance();
+            newState.CountF();
             return newState;
         }
 
@@ -305,6 +315,11 @@ namespace FifteenPuzzle
             newState.SetFreeSpacePosition();
             newState.SetPossibleMoves();
             newState.MovesMade = this.MovesMade + 'D';
+            newState.G = G;
+            newState.H = H;
+            newState.G++;
+            newState.ManhattanDistance();
+            newState.CountF();
             return newState;
         }
 
