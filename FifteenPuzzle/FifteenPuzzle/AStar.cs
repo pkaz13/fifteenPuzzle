@@ -10,35 +10,74 @@ namespace FifteenPuzzle
     public class AStar
     {
 
-        public GameBoardHeuristic Search(string filePath)
+        public GameBoard initialGameBoard { get; set; }
+
+        public AStar(string filePath)
         {
-            GameBoardHeuristic initialBoard = new GameBoardHeuristic(filePath);
-            SimplePriorityQueue<GameBoardHeuristic> pq = new SimplePriorityQueue<GameBoardHeuristic>();
-            List<GameBoardHeuristic> closed = new List<GameBoardHeuristic>();
+            initialGameBoard = new GameBoard(filePath);
+        }
 
-            pq.Enqueue(initialBoard, initialBoard.F);
+        public GameBoard Search()
+        {
+            List<GameBoard> open = new List<GameBoard>();
+            List<GameBoard> closed = new List<GameBoard>();
 
-            while (pq.Count > 0)
+            open.Add(initialGameBoard);
+
+            while (open.Count > 0)
             {
-                GameBoardHeuristic currentBoard = pq.Dequeue();
+                int minF = open.Min(x => x.F);
+                GameBoard currentBoard = open.Find(x => x.F == minF);
+                open.Remove(currentBoard);
 
                 if (currentBoard.IsPuzzleSolved())
                     return currentBoard;
 
-                for (int i = 0; i < 4; i++)
+                currentBoard.CreatePossibleStates();
+
+                foreach (GameBoard successorBoard in currentBoard.Adjacents)
                 {
-                    GameBoardHeuristic moved = currentBoard.Copy(filePath);
-                    if (!moved.MoveCountingPathCost(i))
+                    if (open.Contains(successorBoard))
                         continue;
-                    if (!closed.Contains(moved))
-                    {
-                        closed.Add(moved);
-                        pq.Enqueue(moved, moved.F);
-                    }
+                    if (closed.Contains(successorBoard))
+                        continue;
+                    else
+                        open.Add(successorBoard);
                 }
+                closed.Add(currentBoard);
             }
+
             return null;
         }
+        //public GameBoardHeuristic Search(string filePath)
+        //{
+        //    GameBoardHeuristic initialBoard = new GameBoardHeuristic(filePath);
+        //    SimplePriorityQueue<GameBoardHeuristic> pq = new SimplePriorityQueue<GameBoardHeuristic>();
+        //    List<GameBoardHeuristic> closed = new List<GameBoardHeuristic>();
+
+        //    pq.Enqueue(initialBoard, initialBoard.F);
+
+        //    while (pq.Count > 0)
+        //    {
+        //        GameBoardHeuristic currentBoard = pq.Dequeue();
+
+        //        if (currentBoard.IsPuzzleSolved())
+        //            return currentBoard;
+
+        //        for (int i = 0; i < 4; i++)
+        //        {
+        //            GameBoardHeuristic moved = currentBoard.Copy(filePath);
+        //            if (!moved.MoveCountingPathCost(i))
+        //                continue;
+        //            if (!closed.Contains(moved))
+        //            {
+        //                closed.Add(moved);
+        //                pq.Enqueue(moved, moved.F);
+        //            }
+        //        }
+        //    }
+        //    return null;
+        //}
 
         //public Solution Search()
         //{

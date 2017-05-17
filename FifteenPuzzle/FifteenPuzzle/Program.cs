@@ -10,7 +10,7 @@ namespace FifteenPuzzle
     {
         static void Main(string[] args)
         {
-            string filePath = @"../../../4x4_03_00007.txt";
+            string filePath = @"../../../4x4_01_00002.txt";
             string solvedfilePath = @"../../../solved.txt";
 
             GameBoard board = new GameBoard(filePath);
@@ -56,8 +56,8 @@ namespace FifteenPuzzle
             //Console.WriteLine(stopDFS);
             //Console.WriteLine(solutionDFS.MaxDepthOfRecursion);
 
-            AStar aStar = new AStar();
-            GameBoardHeuristic solved = aStar.Search(filePath);
+            AStar aStar = new AStar(filePath);
+            GameBoard solved = aStar.Search();
 
             for (int i = 0; i < 4; i++)
             {
