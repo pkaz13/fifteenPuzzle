@@ -57,7 +57,7 @@ namespace FifteenPuzzle
             //Console.WriteLine(solutionDFS.MaxDepthOfRecursion);
 
             AStar aStar = new AStar(filePath);
-            GameBoard solved = aStar.Search();
+            GameBoard solved = aStar.Search("manh");
 
             for (int i = 0; i < 4; i++)
             {

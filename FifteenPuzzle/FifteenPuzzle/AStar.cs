@@ -17,7 +17,7 @@ namespace FifteenPuzzle
             initialGameBoard = new GameBoard(filePath);
         }
 
-        public GameBoard Search()
+        public GameBoard Search(string heuristic)
         {
             List<GameBoard> open = new List<GameBoard>();
             List<GameBoard> closed = new List<GameBoard>();
@@ -37,6 +37,19 @@ namespace FifteenPuzzle
 
                 foreach (GameBoard successorBoard in currentBoard.Adjacents)
                 {
+                    if (heuristic == "hamm")
+                    {
+                        successorBoard.G++;
+                        successorBoard.HammingDistance();
+                        successorBoard.CountF();
+                    }
+                    if (heuristic == "manh")
+                    {
+                        successorBoard.G++;
+                        successorBoard.ManhattanDistance();
+                        successorBoard.CountF();
+                    }
+
                     if (open.Contains(successorBoard))
                         continue;
                     if (closed.Contains(successorBoard))

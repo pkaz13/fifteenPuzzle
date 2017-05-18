@@ -53,7 +53,8 @@ namespace FifteenPuzzle
             SetFreeSpacePosition();
             SetPossibleMoves();
             G = 0;
-            ManhattanDistance();
+            //ManhattanDistance();
+            HammingDistance();
         }
 
         private void SwapUp()   
@@ -260,9 +261,9 @@ namespace FifteenPuzzle
             newState.MovesMade = this.MovesMade + 'R';
             newState.G = G;
             newState.H = H;
-            newState.G++;
-            newState.ManhattanDistance();
-            newState.CountF();
+            //newState.G++;
+            //newState.HammingDistance();
+            //newState.CountF();
             return newState;
         }
 
@@ -279,9 +280,9 @@ namespace FifteenPuzzle
             newState.MovesMade = this.MovesMade + 'L';
             newState.G = G;
             newState.H = H;
-            newState.G++;
-            newState.ManhattanDistance();
-            newState.CountF();
+            //newState.G++;
+            //newState.HammingDistance();
+            //newState.CountF();
             return newState;
         }
 
@@ -298,9 +299,9 @@ namespace FifteenPuzzle
             newState.MovesMade = this.MovesMade + 'U';
             newState.G = G;
             newState.H = H;
-            newState.G++;
-            newState.ManhattanDistance();
-            newState.CountF();
+            //newState.G++;
+            //newState.HammingDistance();
+            //newState.CountF();
             return newState;
         }
 
@@ -317,9 +318,9 @@ namespace FifteenPuzzle
             newState.MovesMade = this.MovesMade + 'D';
             newState.G = G;
             newState.H = H;
-            newState.G++;
-            newState.ManhattanDistance();
-            newState.CountF();
+            //newState.G++;
+            //newState.HammingDistance();
+            //newState.CountF();
             return newState;
         }
 
@@ -403,19 +404,17 @@ namespace FifteenPuzzle
             return depth;
         }
 
-        public int HammingDistance()
+        public void HammingDistance()
         {
-            int distance = 0;
-
+            H = 0;
             for (int i = 0; i < 4; i++)
             {
                 for (int j = 0; j < 4; j++)
                 {
                     if (Puzzles[i, j] != solvedPuzzle[i, j])
-                        distance++;
+                        H++;
                 }
             }
-            return distance;
         }
 
         //public int ManhattanDistance()
