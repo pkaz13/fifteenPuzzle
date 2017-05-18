@@ -61,30 +61,30 @@ namespace FifteenPuzzle
             return data;
         }
 
-        public static void SaveSolution(int numberOfMoves, string movesMade)
+        public static void SaveSolution(int numberOfMoves, string movesMade, string fileName)
         {
-            if (File.Exists(@"../../../solution.txt"))
+            if (File.Exists(@"../../../"+fileName))
             {
-                File.Delete(@"../../../solution.txt");
+                File.Delete(@"../../../"+fileName);
             }
-            File.AppendAllText(@"../../../solution.txt", numberOfMoves.ToString());
-            File.AppendAllText(@"../../../solution.txt", Environment.NewLine);
-            File.AppendAllText(@"../../../solution.txt", movesMade);
+            File.AppendAllText(@"../../../" + fileName, numberOfMoves.ToString());
+            File.AppendAllText(@"../../../" + fileName, Environment.NewLine);
+            File.AppendAllText(@"../../../" + fileName, movesMade);
         }
 
-        public static void SaveStats(int numberOfMoves, int numberOfStatesVisited, int maxDepthOfRecursion, double time)
+        public static void SaveStats(int numberOfMoves, int numberOfStatesVisited, int maxDepthOfRecursion, double time, string fileName)
         {
-            if (File.Exists(@"../../../stats.txt"))
+            if (File.Exists(@"../../../" + fileName))
             {
-                File.Delete(@"../../../stats.txt");
+                File.Delete(@"../../../" + fileName);
             }
-            File.AppendAllText(@"../../../stats.txt", numberOfMoves.ToString());
-            File.AppendAllText(@"../../../stats.txt", Environment.NewLine);
-            File.AppendAllText(@"../../../stats.txt", numberOfStatesVisited.ToString());
-            File.AppendAllText(@"../../../stats.txt", Environment.NewLine);
-            File.AppendAllText(@"../../../stats.txt", maxDepthOfRecursion.ToString());
-            File.AppendAllText(@"../../../stats.txt", Environment.NewLine);
-            File.AppendAllText(@"../../../stats.txt", time.ToString());
+            File.AppendAllText(@"../../../" + fileName, numberOfMoves.ToString());
+            File.AppendAllText(@"../../../" + fileName, Environment.NewLine);
+            File.AppendAllText(@"../../../" + fileName, numberOfStatesVisited.ToString());
+            File.AppendAllText(@"../../../" + fileName, Environment.NewLine);
+            File.AppendAllText(@"../../../" + fileName, maxDepthOfRecursion.ToString());
+            File.AppendAllText(@"../../../" + fileName, Environment.NewLine);
+            File.AppendAllText(@"../../../" + fileName, time.ToString());
         }
     }
 }

@@ -10,11 +10,42 @@ namespace FifteenPuzzle
     {
         static void Main(string[] args)
         {
-            string filePath = @"../../../4x4_01_00002.txt";
-            string solvedfilePath = @"../../../solved.txt";
+            DFS dfs = null;
+            BFS bfs = null;
+            AStar aStar = null;
 
-            GameBoard board = new GameBoard(filePath);
-            board.CreatePossibleStates();
+            Solution solution = null;
+
+            string filePath = @"../../../" + args[2];
+
+            switch (args[0])
+            {
+                case "bfs":
+                    bfs = new BFS(filePath);
+                    solution = bfs.Search(args[1]);
+                    FileHelper.SaveSolution(solution.NumberOfMoves, solution.MovesMade, args[3]);
+                    FileHelper.SaveStats(solution.NumberOfMoves, 0, 0, 0, args[4]);
+                    break;
+                case "dfs":
+                    dfs = new DFS(filePath);
+                    solution = dfs.Search(args[1]);
+                    FileHelper.SaveSolution(solution.NumberOfMoves, solution.MovesMade, args[3]);
+                    FileHelper.SaveStats(solution.NumberOfMoves, 0, 0, 0, args[4]);
+                    break;
+                case "astr":
+                    aStar = new AStar(filePath);
+                    solution = aStar.Search(args[1]);
+                    FileHelper.SaveSolution(solution.NumberOfMoves, solution.MovesMade, args[3]);
+                    FileHelper.SaveStats(solution.NumberOfMoves, 0, 0, 0, args[4]);
+                    break;
+                default:
+                    break;
+            }
+            //string filePath = @"../../../4x4_01_00002.txt";
+            //string solvedfilePath = @"../../../solved.txt";
+
+            //GameBoard board = new GameBoard(filePath);
+            //board.CreatePossibleStates();
 
             //BFS bfs = new BFS(filePath);
 
@@ -37,8 +68,6 @@ namespace FifteenPuzzle
             //Console.WriteLine(timespanBFS);
             //Console.WriteLine(solutionBFS.MaxDepthOfRecursion);
 
-            Console.WriteLine("--------------------------------");
-
             //DFS dfs = new DFS(filePath);
             //double startDFS = Environment.TickCount;
             //Solution solutionDFS = dfs.Search("RUDL");
@@ -56,37 +85,31 @@ namespace FifteenPuzzle
             //Console.WriteLine(stopDFS);
             //Console.WriteLine(solutionDFS.MaxDepthOfRecursion);
 
-            AStar aStar = new AStar(filePath);
-            GameBoard solved = aStar.Search("manh");
+            //AStar aStar = new AStar(filePath);
+            //Solution solution = aStar.Search("manh");
 
-            for (int i = 0; i < 4; i++)
-            {
-                for (int j = 0; j < 4; j++)
-                {
-                    Console.Write(string.Format("{0} ", board.Puzzles[i, j]));
-                }
-                Console.Write(Environment.NewLine + Environment.NewLine);
-            }
-            Console.WriteLine();
+            //for (int i = 0; i < 4; i++)
+            //{
+            //    for (int j = 0; j < 4; j++)
+            //    {
+            //        Console.Write(string.Format("{0} ", board.Puzzles[i, j]));
+            //    }
+            //    Console.Write(Environment.NewLine + Environment.NewLine);
+            //}
+            //Console.WriteLine();
 
-            if (solved == null)
-                Console.WriteLine("brak");
-            else
-            {
-                for (int i = 0; i < 4; i++)
-                {
-                    for (int j = 0; j < 4; j++)
-                    {
-                        Console.Write(string.Format("{0} ", solved.Puzzles[i, j]));
-                    }
-                    Console.Write(Environment.NewLine + Environment.NewLine);
-                }
-            }
+            //{
+            //    for (int i = 0; i < 4; i++)
+            //    {
+            //        for (int j = 0; j < 4; j++)
+            //        {
+            //            Console.Write(string.Format("{0} ", solution.board.Puzzles[i, j]));
+            //        }
+            //        Console.Write(Environment.NewLine + Environment.NewLine);
+            //    }
+            //}
 
-
-
-
-            Console.ReadKey();
+            //Console.ReadKey();
 
         }
     }

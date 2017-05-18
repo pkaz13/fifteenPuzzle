@@ -17,8 +17,10 @@ namespace FifteenPuzzle
             initialGameBoard = new GameBoard(filePath);
         }
 
-        public GameBoard Search(string heuristic)
+        public Solution Search(string heuristic)
         {
+            Solution solution = new Solution();
+
             List<GameBoard> open = new List<GameBoard>();
             List<GameBoard> closed = new List<GameBoard>();
 
@@ -31,8 +33,13 @@ namespace FifteenPuzzle
                 open.Remove(currentBoard);
 
                 if (currentBoard.IsPuzzleSolved())
-                    return currentBoard;
-
+                {
+                    solution.board = currentBoard;
+                    solution.MovesMade = currentBoard.MovesMade;
+                    solution.NumberOfMoves = currentBoard.MovesMade.Length;
+                    return solution;
+                }
+                   
                 currentBoard.CreatePossibleStates();
 
                 foreach (GameBoard successorBoard in currentBoard.Adjacents)
@@ -59,8 +66,11 @@ namespace FifteenPuzzle
                 }
                 closed.Add(currentBoard);
             }
+            solution.NumberOfMoves = -1;
+            solution.MovesMade = String.Empty;
 
-            return null;
+            return solution;
+
         }
         //public GameBoardHeuristic Search(string filePath)
         //{
