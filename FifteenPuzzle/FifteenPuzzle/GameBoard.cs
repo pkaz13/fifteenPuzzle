@@ -51,15 +51,14 @@ namespace FifteenPuzzle
             Puzzles = FileHelper.InitBoard(initialFilePath);
             solvedPuzzle = FileHelper.InitBoard(solvedFilePath);
             FreeSpacePosition = new int[2];
+            int[] temp = FileHelper.GetRowsAndColumns(initialFilePath);
+            Rows = temp[0];
+            Columns = temp[1];
             Adjacents = new List<GameBoard>();
             MovesMade = "";
             SetFreeSpacePosition();
             SetPossibleMoves();
             G = 0;
-
-            int[] temp = FileHelper.GetRowsAndColumns(initialFilePath);
-            Rows = temp[0];
-            Columns = temp[1];
         }
 
         private void SwapUp()
@@ -109,7 +108,7 @@ namespace FifteenPuzzle
         {
             char[] possibleMoves;
 
-            if (FreeSpacePosition[0] > 0 && FreeSpacePosition[0] < (Rows - 1) && FreeSpacePosition[1] > 0 && FreeSpacePosition[1] < (Columns - 1))
+            if (FreeSpacePosition[0] < (Rows - 1) && FreeSpacePosition[0] > 0 && FreeSpacePosition[1] > 0 && FreeSpacePosition[1] < (Columns - 1))
             {
                 possibleMoves = new char[4];
                 possibleMoves[0] = (char)Moves.Left;
@@ -119,7 +118,7 @@ namespace FifteenPuzzle
                 PossibleMoves = new string(possibleMoves);  //LRUD
             }
 
-            if (FreeSpacePosition[0] > 0 && FreeSpacePosition[0] < (Rows - 1) && FreeSpacePosition[1] == 0)
+            if (FreeSpacePosition[0] == 0 && FreeSpacePosition[1] > 0 && FreeSpacePosition[1] < (Columns - 1))
             {
                 possibleMoves = new char[3];
                 possibleMoves[0] = (char)Moves.Left;
@@ -137,7 +136,7 @@ namespace FifteenPuzzle
                 PossibleMoves = new string(possibleMoves);  //LUD
             }
 
-            if ((FreeSpacePosition[0] == 3 && FreeSpacePosition[1] == 1) || (FreeSpacePosition[0] == 3 && FreeSpacePosition[1] == 2))
+            if (FreeSpacePosition[0] == (Rows - 1) && FreeSpacePosition[1] > 0 && FreeSpacePosition[1] < (Columns - 1))
             {
                 possibleMoves = new char[3];
                 possibleMoves[0] = (char)Moves.Left;
@@ -146,7 +145,7 @@ namespace FifteenPuzzle
                 PossibleMoves = new string(possibleMoves);  //LRU
             }
 
-            if ((FreeSpacePosition[0] == 1 && FreeSpacePosition[1] == 0) || (FreeSpacePosition[0] == 2 && FreeSpacePosition[1] == 0))
+            if (FreeSpacePosition[0] > 0 && FreeSpacePosition[0] < (Rows - 1) && FreeSpacePosition[1] == 0)
             {
                 possibleMoves = new char[3];
                 possibleMoves[0] = (char)Moves.Right;
@@ -190,8 +189,7 @@ namespace FifteenPuzzle
 
         public void CreatePossibleStates()
         {
-            if ((FreeSpacePosition[0] == 1 && FreeSpacePosition[1] == 1) || (FreeSpacePosition[0] == 1 && FreeSpacePosition[1] == 2) ||
-                (FreeSpacePosition[0] == 2 && FreeSpacePosition[1] == 1) || (FreeSpacePosition[0] == 2 && FreeSpacePosition[1] == 2))
+            if (FreeSpacePosition[0] < (Rows - 1) && FreeSpacePosition[0] > 0 && FreeSpacePosition[1] > 0 && FreeSpacePosition[1] < (Columns - 1))
             {
                 Adjacents.Add(CreateStateLeft());
                 Adjacents.Add(CreateStateRight());
@@ -199,28 +197,28 @@ namespace FifteenPuzzle
                 Adjacents.Add(CreateStateDown());   //LRUD
             }
 
-            if ((FreeSpacePosition[0] == 0 && FreeSpacePosition[1] == 1) || (FreeSpacePosition[0] == 0 && FreeSpacePosition[1] == 2))
+            if (FreeSpacePosition[0] == 0 && FreeSpacePosition[1] > 0 && FreeSpacePosition[1] < (Columns - 1))
             {
                 Adjacents.Add(CreateStateLeft());
                 Adjacents.Add(CreateStateRight());
                 Adjacents.Add(CreateStateDown());   //LRD
             }
 
-            if ((FreeSpacePosition[0] == 1 && FreeSpacePosition[1] == 3) || (FreeSpacePosition[0] == 2 && FreeSpacePosition[1] == 3))
+            if (FreeSpacePosition[0] > 0 && FreeSpacePosition[0] < (Rows - 1) && FreeSpacePosition[1] == (Columns - 1))
             {
                 Adjacents.Add(CreateStateLeft());
                 Adjacents.Add(CreateStateUp());
                 Adjacents.Add(CreateStateDown());   //LUD
             }
 
-            if ((FreeSpacePosition[0] == 3 && FreeSpacePosition[1] == 1) || (FreeSpacePosition[0] == 3 && FreeSpacePosition[1] == 2))
+            if (FreeSpacePosition[0] == (Rows - 1) && FreeSpacePosition[1] > 0 && FreeSpacePosition[1] < (Columns - 1))
             {
                 Adjacents.Add(CreateStateLeft());
                 Adjacents.Add(CreateStateRight());
                 Adjacents.Add(CreateStateUp()); //LRU
             }
 
-            if ((FreeSpacePosition[0] == 1 && FreeSpacePosition[1] == 0) || (FreeSpacePosition[0] == 2 && FreeSpacePosition[1] == 0))
+            if (FreeSpacePosition[0] > 0 && FreeSpacePosition[0] < (Rows - 1) && FreeSpacePosition[1] == 0)
             {
                 Adjacents.Add(CreateStateRight());
                 Adjacents.Add(CreateStateUp());
@@ -233,19 +231,19 @@ namespace FifteenPuzzle
                 Adjacents.Add(CreateStateDown());   //RD
             }
 
-            if (FreeSpacePosition[0] == 0 && FreeSpacePosition[1] == 3)
+            if (FreeSpacePosition[0] == 0 && FreeSpacePosition[1] == (Columns - 1))
             {
                 Adjacents.Add(CreateStateLeft());
                 Adjacents.Add(CreateStateDown());   //LD
             }
 
-            if (FreeSpacePosition[0] == 3 && FreeSpacePosition[1] == 3)
+            if (FreeSpacePosition[0] == (Rows - 1) && FreeSpacePosition[1] == (Columns - 1))
             {
                 Adjacents.Add(CreateStateLeft());
                 Adjacents.Add(CreateStateUp()); //LU
             }
 
-            if (FreeSpacePosition[0] == 3 && FreeSpacePosition[1] == 0)
+            if (FreeSpacePosition[0] == (Rows - 1) && FreeSpacePosition[1] == 0)
             {
                 Adjacents.Add(CreateStateRight());
                 Adjacents.Add(CreateStateUp()); //RU
