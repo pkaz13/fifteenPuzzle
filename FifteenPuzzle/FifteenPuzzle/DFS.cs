@@ -24,6 +24,7 @@ namespace FifteenPuzzle
             char[] movesFromParameter = moves.ToCharArray();
             char[] possibleMovesFromBoard;
             int depthOfRecursion = 0;
+            int statesVisited = 0;
 
             Solution solution = new Solution();
             Stack<GameBoard> stack = new Stack<GameBoard>();
@@ -32,14 +33,10 @@ namespace FifteenPuzzle
             while (stack.Count > 0)
             {
                 GameBoard currentBoard = stack.Pop();
+                statesVisited++;
 
                 possibleMovesFromBoard = currentBoard.PossibleMoves.ToCharArray();
                 depthOfRecursion = currentBoard.GetDepthOfState();
-
-                solution.board = currentBoard;
-                solution.NumberOfMoves = currentBoard.MovesMade.Length;
-                solution.MovesMade = currentBoard.MovesMade;
-                solution.MaxDepthOfRecursion = MaxDepthOfRecursion;
 
                 if (currentBoard.Depth > maxDepthOfRecursion)
                 {
@@ -47,7 +44,12 @@ namespace FifteenPuzzle
                 }
 
                 if (currentBoard.IsPuzzleSolved())
-                { 
+                {
+                    solution.board = currentBoard;
+                    solution.NumberOfMoves = currentBoard.MovesMade.Length;
+                    solution.MovesMade = currentBoard.MovesMade;
+                    solution.MaxDepthOfRecursion = MaxDepthOfRecursion;
+                    solution.StatesVisited = statesVisited;
                     return solution;
                 }
 
@@ -68,6 +70,7 @@ namespace FifteenPuzzle
             }
             solution.NumberOfMoves = -1;
             solution.MovesMade = String.Empty;
+            solution.StatesVisited = statesVisited;
             return solution;
         }
 

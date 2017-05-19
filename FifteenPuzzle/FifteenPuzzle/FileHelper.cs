@@ -72,7 +72,7 @@ namespace FifteenPuzzle
             File.AppendAllText(@"../../../" + fileName, movesMade);
         }
 
-        public static void SaveStats(int numberOfMoves, int numberOfStatesVisited, int maxDepthOfRecursion, double time, string fileName)
+        public static void SaveStats(int numberOfMoves, int numberOfStatesVisited, int maxDepthOfRecursion, long time, string fileName)
         {
             if (File.Exists(@"../../../" + fileName))
             {

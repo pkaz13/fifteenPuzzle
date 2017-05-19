@@ -17,24 +17,26 @@ namespace FifteenPuzzle
 
         public Solution Search(string moves)
         {
+            int statesVisited = 0;
             char[] movesFromParameter = moves.ToCharArray();
             char[] possibleMovesFromBoard;
                  
             Solution solution = new Solution();
             Queue<GameBoard> queue = new Queue<GameBoard>();
             queue.Enqueue(initialBoard);
+
             while (queue.Count > 0)
             {
                 GameBoard currentBoard = queue.Dequeue();
-
+                statesVisited++;
                 possibleMovesFromBoard = currentBoard.PossibleMoves.ToCharArray();
-
-                solution.board = currentBoard;
-                solution.NumberOfMoves = currentBoard.MovesMade.Length;
-                solution.MovesMade = currentBoard.MovesMade;
 
                 if (currentBoard.IsPuzzleSolved())
                 {
+                    solution.board = currentBoard;
+                    solution.NumberOfMoves = currentBoard.MovesMade.Length;
+                    solution.MovesMade = currentBoard.MovesMade;
+                    solution.StatesVisited = statesVisited;
                     return solution;
                 }
                 
@@ -52,6 +54,8 @@ namespace FifteenPuzzle
             }
             solution.NumberOfMoves = -1;
             solution.MovesMade = String.Empty;
+            solution.StatesVisited = statesVisited;
+
             return solution;
         }
     }

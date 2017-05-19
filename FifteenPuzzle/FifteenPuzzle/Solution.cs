@@ -12,6 +12,7 @@ namespace FifteenPuzzle
         public int NumberOfMoves { get; set; }
         public string MovesMade { get; set; }
         public int MaxDepthOfRecursion { get; set; }
+        public int StatesVisited { get; set; }
 
         public Solution()
         {
@@ -19,6 +20,7 @@ namespace FifteenPuzzle
             NumberOfMoves = 0;
             MovesMade = "";
             MaxDepthOfRecursion = 0;
+            StatesVisited = 0;
         }
     }
 }
