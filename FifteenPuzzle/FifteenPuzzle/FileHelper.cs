@@ -86,6 +86,13 @@ namespace FifteenPuzzle
             File.AppendAllText(@"../../../" + fileName, Environment.NewLine);
             File.AppendAllText(@"../../../" + fileName, time.ToString());
         }
+
+        public static int[] GetRowsAndColumns(string filePath)
+        {
+            string[] lines = File.ReadAllLines(filePath);
+            int[] rowsAndColumns = lines[0].Split(new Char[] { ',', ' ' }).Select(int.Parse).ToArray();
+            return rowsAndColumns;
+        }
     }
 }
 

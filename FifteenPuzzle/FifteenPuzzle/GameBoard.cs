@@ -12,6 +12,9 @@ namespace FifteenPuzzle
 
         public List<GameBoard> Adjacents { get; set; }
 
+        private int Rows;
+        private int Columns;
+
         public char Move { get; set; }
 
         public string PossibleMoves { get; set; }
@@ -53,11 +56,13 @@ namespace FifteenPuzzle
             SetFreeSpacePosition();
             SetPossibleMoves();
             G = 0;
-            //ManhattanDistance();
-            HammingDistance();
+
+            int[] temp = FileHelper.GetRowsAndColumns(initialFilePath);
+            Rows = temp[0];
+            Columns = temp[1];
         }
 
-        private void SwapUp()   
+        private void SwapUp()
         {
             int tempValue = Puzzles[FreeSpacePosition[0] - 1, FreeSpacePosition[1]];
             Puzzles[FreeSpacePosition[0] - 1, FreeSpacePosition[1]] = 0;
@@ -87,9 +92,9 @@ namespace FifteenPuzzle
 
         private void SetFreeSpacePosition()
         {
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < Rows; i++)
             {
-                for (int j = 0; j < 4; j++)
+                for (int j = 0; j < Columns; j++)
                 {
                     if (Puzzles[i, j] == 0)
                     {
@@ -103,9 +108,8 @@ namespace FifteenPuzzle
         private void SetPossibleMoves()
         {
             char[] possibleMoves;
-           
-            if ((FreeSpacePosition[0] == 1 && FreeSpacePosition[1] == 1) || (FreeSpacePosition[0] == 1 && FreeSpacePosition[1] == 2) ||
-                (FreeSpacePosition[0] == 2 && FreeSpacePosition[1] == 1) || (FreeSpacePosition[0] == 2 && FreeSpacePosition[1] == 2))
+
+            if (FreeSpacePosition[0] > 0 && FreeSpacePosition[0] < (Rows - 1) && FreeSpacePosition[1] > 0 && FreeSpacePosition[1] < (Columns - 1))
             {
                 possibleMoves = new char[4];
                 possibleMoves[0] = (char)Moves.Left;
@@ -115,7 +119,7 @@ namespace FifteenPuzzle
                 PossibleMoves = new string(possibleMoves);  //LRUD
             }
 
-            if ((FreeSpacePosition[0] == 0 && FreeSpacePosition[1] == 1) || (FreeSpacePosition[0] == 0 && FreeSpacePosition[1] == 2))
+            if (FreeSpacePosition[0] > 0 && FreeSpacePosition[0] < (Rows - 1) && FreeSpacePosition[1] == 0)
             {
                 possibleMoves = new char[3];
                 possibleMoves[0] = (char)Moves.Left;
@@ -124,7 +128,7 @@ namespace FifteenPuzzle
                 PossibleMoves = new string(possibleMoves);  //LRD
             }
 
-            if ((FreeSpacePosition[0] == 1 && FreeSpacePosition[1] == 3) || (FreeSpacePosition[0] == 2 && FreeSpacePosition[1] == 3))
+            if (FreeSpacePosition[0] > 0 && FreeSpacePosition[0] < (Rows - 1) && FreeSpacePosition[1] == (Columns - 1))
             {
                 possibleMoves = new char[3];
                 possibleMoves[0] = (char)Moves.Left;
@@ -159,7 +163,7 @@ namespace FifteenPuzzle
                 PossibleMoves = new string(possibleMoves);  //RD
             }
 
-            if (FreeSpacePosition[0] == 0 && FreeSpacePosition[1] == 3)
+            if (FreeSpacePosition[0] == 0 && FreeSpacePosition[1] == (Columns - 1))
             {
                 possibleMoves = new char[2];
                 possibleMoves[0] = (char)Moves.Left;
@@ -167,7 +171,7 @@ namespace FifteenPuzzle
                 PossibleMoves = new string(possibleMoves);  //LD
             }
 
-            if (FreeSpacePosition[0] == 3 && FreeSpacePosition[1] == 3)
+            if (FreeSpacePosition[0] == (Rows - 1) && FreeSpacePosition[1] == (Columns - 1))
             {
                 possibleMoves = new char[2];
                 possibleMoves[0] = (char)Moves.Left;
@@ -175,7 +179,7 @@ namespace FifteenPuzzle
                 PossibleMoves = new string(possibleMoves);  //LU
             }
 
-            if (FreeSpacePosition[0] == 3 && FreeSpacePosition[1] == 0)
+            if (FreeSpacePosition[0] == (Rows - 1) && FreeSpacePosition[1] == 0)
             {
                 possibleMoves = new char[2];
                 possibleMoves[0] = (char)Moves.Right;
@@ -252,6 +256,8 @@ namespace FifteenPuzzle
         {
             GameBoard newState = new GameBoard();
             newState.ParentBoard = this;
+            newState.Rows = Rows;
+            newState.Columns = Columns;
             newState.Puzzles = CopyValues(this.Puzzles);
             newState.FreeSpacePosition = SetFreeSpacePosition(this.Puzzles);
             newState.SwapRight();
@@ -261,9 +267,6 @@ namespace FifteenPuzzle
             newState.MovesMade = this.MovesMade + 'R';
             newState.G = G;
             newState.H = H;
-            //newState.G++;
-            //newState.HammingDistance();
-            //newState.CountF();
             return newState;
         }
 
@@ -271,6 +274,8 @@ namespace FifteenPuzzle
         {
             GameBoard newState = new GameBoard();
             newState.ParentBoard = this;
+            newState.Rows = Rows;
+            newState.Columns = Columns;
             newState.Puzzles = CopyValues(this.Puzzles);
             newState.FreeSpacePosition = SetFreeSpacePosition(this.Puzzles);
             newState.SwapLeft();
@@ -280,9 +285,8 @@ namespace FifteenPuzzle
             newState.MovesMade = this.MovesMade + 'L';
             newState.G = G;
             newState.H = H;
-            //newState.G++;
-            //newState.HammingDistance();
-            //newState.CountF();
+            newState.Rows = Rows;
+            newState.Columns = Columns;
             return newState;
         }
 
@@ -290,6 +294,8 @@ namespace FifteenPuzzle
         {
             GameBoard newState = new GameBoard();
             newState.ParentBoard = this;
+            newState.Rows = Rows;
+            newState.Columns = Columns;
             newState.Puzzles = CopyValues(this.Puzzles);
             newState.FreeSpacePosition = SetFreeSpacePosition(this.Puzzles);
             newState.SwapUp();
@@ -299,9 +305,6 @@ namespace FifteenPuzzle
             newState.MovesMade = this.MovesMade + 'U';
             newState.G = G;
             newState.H = H;
-            //newState.G++;
-            //newState.HammingDistance();
-            //newState.CountF();
             return newState;
         }
 
@@ -309,6 +312,8 @@ namespace FifteenPuzzle
         {
             GameBoard newState = new GameBoard();
             newState.ParentBoard = this;
+            newState.Rows = Rows;
+            newState.Columns = Columns;
             newState.Puzzles = CopyValues(this.Puzzles);
             newState.FreeSpacePosition = SetFreeSpacePosition(this.Puzzles);
             newState.SwapDown();
@@ -318,18 +323,15 @@ namespace FifteenPuzzle
             newState.MovesMade = this.MovesMade + 'D';
             newState.G = G;
             newState.H = H;
-            //newState.G++;
-            //newState.HammingDistance();
-            //newState.CountF();
             return newState;
         }
 
         private int[,] CopyValues(int[,] array)
         {
-            int[,] newArray = new int[4, 4];
-            for (int i = 0; i < 4; i++)
+            int[,] newArray = new int[Rows, Columns];
+            for (int i = 0; i < Rows; i++)
             {
-                for (int j = 0; j < 4; j++)
+                for (int j = 0; j < Columns; j++)
                 {
                     newArray[i, j] = array[i, j];
                 }
@@ -340,9 +342,9 @@ namespace FifteenPuzzle
         private int[] SetFreeSpacePosition(int[,] array)
         {
             int[] newArray = new int[2];
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < Rows; i++)
             {
-                for (int j = 0; j < 4; j++)
+                for (int j = 0; j < Columns; j++)
                 {
                     if (array[i, j] == 0)
                     {
@@ -407,9 +409,9 @@ namespace FifteenPuzzle
         public void HammingDistance()
         {
             H = 0;
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < Rows; i++)
             {
-                for (int j = 0; j < 4; j++)
+                for (int j = 0; j < Columns; j++)
                 {
                     if (Puzzles[i, j] != solvedPuzzle[i, j])
                         H++;
@@ -417,33 +419,13 @@ namespace FifteenPuzzle
             }
         }
 
-        //public int ManhattanDistance()
-        //{
-        //    int distance = 0;
-        //    for (int i = 0; i < 4; i++)
-        //    {
-        //        for (int j = 0; j < 4; j++)
-        //        {
-        //            int NoOnBoard = Puzzles[i, j];
-        //            if (NoOnBoard != 0)
-        //            {
-        //                int targetI = (NoOnBoard - 1) / 4; //expected row coordinate
-        //                int targetJ = (NoOnBoard - 1) / 4; //expected column coordinate
-        //                int di = i - targetI;   //distance to expected row coordinate
-        //                int dj = j - targetJ;   //distance to expected column coordinate
-        //                distance += Math.Abs(di) + Math.Abs(dj);
-        //            }
-        //        }
-        //    }
-        //    return distance;
-        //}
         public void ManhattanDistance()
         {
             H = 0;
             int count = 1;
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < Rows; i++)
             {
-                for (int j = 0; j < 4; j++)
+                for (int j = 0; j < Columns; j++)
                 {
                     if (count == 16)
                         continue;
@@ -454,17 +436,17 @@ namespace FifteenPuzzle
                 }
             }
             int[] positionFreeSpace = FindSpecificNumber(0);
-            H += Math.Abs(3 - positionFreeSpace[0]) + Math.Abs(3 - positionFreeSpace[1]);
+            H += Math.Abs((Rows - 1) - positionFreeSpace[0]) + Math.Abs((Columns - 1) - positionFreeSpace[1]);
         }
 
         private int[] FindSpecificNumber(int number)
         {
             int[] foundNoPosition = new int[2];
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < Rows; i++)
             {
-                for (int j = 0; j < 4; j++)
+                for (int j = 0; j < Columns; j++)
                 {
-                    if (Puzzles[i,j] == number)
+                    if (Puzzles[i, j] == number)
                     {
                         foundNoPosition[0] = i;
                         foundNoPosition[1] = j;

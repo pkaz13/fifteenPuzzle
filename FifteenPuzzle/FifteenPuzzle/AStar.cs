@@ -25,6 +25,10 @@ namespace FifteenPuzzle
             List<GameBoard> closed = new List<GameBoard>();
 
             open.Add(initialGameBoard);
+            if (heuristic == "hamm")
+                initialGameBoard.HammingDistance();
+            if (heuristic == "manh")
+                initialGameBoard.ManhattanDistance();
 
             while (open.Count > 0)
             {
