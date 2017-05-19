@@ -48,7 +48,7 @@ namespace FifteenPuzzle
                     solution.board = currentBoard;
                     solution.NumberOfMoves = currentBoard.MovesMade.Length;
                     solution.MovesMade = currentBoard.MovesMade;
-                    solution.MaxDepthOfRecursion = MaxDepthOfRecursion;
+                    solution.MaxDepthOfRecursion = depthOfRecursion;
                     solution.StatesVisited = statesVisited;
                     return solution;
                 }
@@ -71,6 +71,7 @@ namespace FifteenPuzzle
             solution.NumberOfMoves = -1;
             solution.MovesMade = String.Empty;
             solution.StatesVisited = statesVisited;
+            solution.MaxDepthOfRecursion = depthOfRecursion;
             return solution;
         }
 

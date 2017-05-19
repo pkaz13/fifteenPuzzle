@@ -18,6 +18,7 @@ namespace FifteenPuzzle
         public Solution Search(string moves)
         {
             int statesVisited = 0;
+            int depthOfRecursion = 0;
             char[] movesFromParameter = moves.ToCharArray();
             char[] possibleMovesFromBoard;
                  
@@ -29,6 +30,7 @@ namespace FifteenPuzzle
             {
                 GameBoard currentBoard = queue.Dequeue();
                 statesVisited++;
+                depthOfRecursion = currentBoard.GetDepthOfState();
                 possibleMovesFromBoard = currentBoard.PossibleMoves.ToCharArray();
 
                 if (currentBoard.IsPuzzleSolved())
@@ -37,6 +39,7 @@ namespace FifteenPuzzle
                     solution.NumberOfMoves = currentBoard.MovesMade.Length;
                     solution.MovesMade = currentBoard.MovesMade;
                     solution.StatesVisited = statesVisited;
+                    solution.MaxDepthOfRecursion = depthOfRecursion;
                     return solution;
                 }
                 
@@ -55,6 +58,7 @@ namespace FifteenPuzzle
             solution.NumberOfMoves = -1;
             solution.MovesMade = String.Empty;
             solution.StatesVisited = statesVisited;
+            solution.MaxDepthOfRecursion = depthOfRecursion;
 
             return solution;
         }

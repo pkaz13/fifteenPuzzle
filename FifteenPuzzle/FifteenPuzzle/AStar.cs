@@ -20,6 +20,7 @@ namespace FifteenPuzzle
         public Solution Search(string heuristic)
         {
             int statesVisited = 0;
+            int depthOfRecursion = 0;
             Solution solution = new Solution();
 
             List<GameBoard> open = new List<GameBoard>();
@@ -39,12 +40,15 @@ namespace FifteenPuzzle
                 GameBoard currentBoard = open.Find(x => x.F == minF);
                 open.Remove(currentBoard);
 
+                depthOfRecursion = currentBoard.GetDepthOfState();
+
                 if (currentBoard.IsPuzzleSolved())
                 {
                     solution.board = currentBoard;
                     solution.MovesMade = currentBoard.MovesMade;
                     solution.NumberOfMoves = currentBoard.MovesMade.Length;
                     solution.StatesVisited = statesVisited;
+                    solution.MaxDepthOfRecursion = depthOfRecursion;
                     return solution;
                 }
                    
@@ -78,13 +82,9 @@ namespace FifteenPuzzle
             solution.NumberOfMoves = -1;
             solution.MovesMade = String.Empty;
             solution.StatesVisited = statesVisited;
+            solution.MaxDepthOfRecursion = depthOfRecursion;
 
             return solution;
-        }
-
-        private float TimeCount(float start, float end)
-        {
-            return end - start;
         }
     }
 }

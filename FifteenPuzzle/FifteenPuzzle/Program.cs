@@ -30,7 +30,7 @@ namespace FifteenPuzzle
                     watch.Stop();
                     elapsedMs = watch.ElapsedMilliseconds;
                     FileHelper.SaveSolution(solution.NumberOfMoves, solution.MovesMade, args[3]);
-                    FileHelper.SaveStats(solution.NumberOfMoves, solution.StatesVisited, 0, elapsedMs, args[4]);
+                    FileHelper.SaveStats(solution.NumberOfMoves, solution.StatesVisited, solution.MaxDepthOfRecursion, elapsedMs, args[4]);
                     break;
                 case "dfs":
                     dfs = new DFS(filePath);
@@ -39,7 +39,7 @@ namespace FifteenPuzzle
                     watch.Stop();
                     elapsedMs = watch.ElapsedMilliseconds;
                     FileHelper.SaveSolution(solution.NumberOfMoves, solution.MovesMade, args[3]);
-                    FileHelper.SaveStats(solution.NumberOfMoves, solution.StatesVisited, 0, elapsedMs, args[4]);
+                    FileHelper.SaveStats(solution.NumberOfMoves, solution.StatesVisited, solution.MaxDepthOfRecursion, elapsedMs, args[4]);
                     break;
                 case "astr":
                     aStar = new AStar(filePath);
@@ -48,7 +48,7 @@ namespace FifteenPuzzle
                     watch.Stop();
                     elapsedMs = watch.ElapsedMilliseconds;
                     FileHelper.SaveSolution(solution.NumberOfMoves, solution.MovesMade, args[3]);
-                    FileHelper.SaveStats(solution.NumberOfMoves, solution.StatesVisited, 0, elapsedMs, args[4]);
+                    FileHelper.SaveStats(solution.NumberOfMoves, solution.StatesVisited, solution.MaxDepthOfRecursion, elapsedMs, args[4]);
                     break;
                 default:
                     break;
