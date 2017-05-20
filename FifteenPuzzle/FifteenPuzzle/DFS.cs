@@ -62,9 +62,13 @@ namespace FifteenPuzzle
                             currentBoard.Adjacents.Add(currentBoard.CreateStateDependingOnChar(movesFromParameter[i]));
                         }
                     }
-                    foreach (GameBoard board in currentBoard.Adjacents)
+                    //foreach (GameBoard board in currentBoard.Adjacents)
+                    //{
+                    //    stack.Push(board);
+                    //}
+                    for (int i = currentBoard.Adjacents.Count - 1; i >= 0; i--)
                     {
-                        stack.Push(board);
+                        stack.Push(currentBoard.Adjacents.ElementAt(i));
                     }
                 }
             }
