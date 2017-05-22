@@ -36,7 +36,7 @@ namespace FifteenPuzzle
                 statesVisited++;
 
                 possibleMovesFromBoard = currentBoard.PossibleMoves.ToCharArray();
-                depthOfRecursion = currentBoard.GetDepthOfState();
+                depthOfRecursion = currentBoard.GetDepthOfState() - 1;
 
                 if (currentBoard.Depth > maxDepthOfRecursion)
                 {

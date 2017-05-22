@@ -29,7 +29,7 @@ namespace FifteenPuzzle
 
         private int[,] solvedPuzzle;
 
-        private const string solvedFilePath = @"../../../solved.txt";
+        private const string solvedFilePath = @"G:/for_script/solved.txt";
 
         public int G { get; set; }
 

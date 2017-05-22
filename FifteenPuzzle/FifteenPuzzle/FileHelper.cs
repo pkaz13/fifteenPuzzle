@@ -28,28 +28,28 @@ namespace FifteenPuzzle
 
         public static void SaveSolution(int numberOfMoves, string movesMade, string fileName)
         {
-            if (File.Exists(@"../../../"+fileName))
+            if (File.Exists(@"G:/for_script/" + fileName))
             {
-                File.Delete(@"../../../"+fileName);
+                File.Delete(@"G:/for_script/" + fileName);
             }
-            File.AppendAllText(@"../../../" + fileName, numberOfMoves.ToString());
-            File.AppendAllText(@"../../../" + fileName, Environment.NewLine);
-            File.AppendAllText(@"../../../" + fileName, movesMade);
+            File.AppendAllText(@"G:/for_script/" + fileName, numberOfMoves.ToString());
+            File.AppendAllText(@"G:/for_script/" + fileName, Environment.NewLine);
+            File.AppendAllText(@"G:/for_script/" + fileName, movesMade);
         }
 
         public static void SaveStats(int numberOfMoves, int numberOfStatesVisited, int maxDepthOfRecursion, long time, string fileName)
         {
-            if (File.Exists(@"../../../" + fileName))
+            if (File.Exists(@"G:/for_script/" + fileName))
             {
-                File.Delete(@"../../../" + fileName);
+                File.Delete(@"G:/for_script/" + fileName);
             }
-            File.AppendAllText(@"../../../" + fileName, numberOfMoves.ToString());
-            File.AppendAllText(@"../../../" + fileName, Environment.NewLine);
-            File.AppendAllText(@"../../../" + fileName, numberOfStatesVisited.ToString());
-            File.AppendAllText(@"../../../" + fileName, Environment.NewLine);
-            File.AppendAllText(@"../../../" + fileName, maxDepthOfRecursion.ToString());
-            File.AppendAllText(@"../../../" + fileName, Environment.NewLine);
-            File.AppendAllText(@"../../../" + fileName, time.ToString());
+            File.AppendAllText(@"G:/for_script/" + fileName, numberOfMoves.ToString());
+            File.AppendAllText(@"G:/for_script/" + fileName, Environment.NewLine);
+            File.AppendAllText(@"G:/for_script/" + fileName, numberOfStatesVisited.ToString());
+            File.AppendAllText(@"G:/for_script/" + fileName, Environment.NewLine);
+            File.AppendAllText(@"G:/for_script/" + fileName, maxDepthOfRecursion.ToString());
+            File.AppendAllText(@"G:/for_script/" + fileName, Environment.NewLine);
+            File.AppendAllText(@"G:/for_script/" + fileName, time.ToString());
         }
 
         public static int[] GetRowsAndColumns(string filePath)
