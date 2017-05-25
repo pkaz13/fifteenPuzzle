@@ -20,7 +20,7 @@ namespace FifteenPuzzle
             Stopwatch watch = null;
             long elapsedMs = 0;
 
-            string filePath = @"G:/for_script/" + args[2];
+            string filePath = @"../../../" + args[2];
 
             switch (args[0])
             {
