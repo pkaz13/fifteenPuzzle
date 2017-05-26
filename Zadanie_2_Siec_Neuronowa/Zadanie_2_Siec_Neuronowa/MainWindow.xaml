@@ -4,9 +4,81 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Zadanie_2_Siec_Neuronowa"
+        xmlns:charting="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="Lebioda Kaźmierczak - Zadanie 2 - Sieć neuronowa" Height="761.648" Width="1343.182" >
     <Grid>
-        
+        <GroupBox Header="Ustawienia sieci" HorizontalAlignment="Left" Height="640" Margin="10,0,0,0" VerticalAlignment="Top" Width="245">
+            <Grid>
+                <Label  Content="Ilość epok:" HorizontalAlignment="Left" Margin="11,328,0,0" VerticalAlignment="Top" Width="125"/>
+                <Label Content="Epsilon:" HorizontalAlignment="Left" Margin="11,359,0,0" VerticalAlignment="Top" Width="125"/>
+                <Label Content="Ile warstw ukrytych:" HorizontalAlignment="Left" Margin="10,143,0,0" VerticalAlignment="Top" Width="125"/>
+                <Label Content="Ilość neuronów:" HorizontalAlignment="Left" Margin="10,169,0,0" VerticalAlignment="Top" Width="125"/>
+                <Label Content="Dane treningowe:" HorizontalAlignment="Left" Margin="64,301,0,0" VerticalAlignment="Top" FontWeight="Bold" RenderTransformOrigin="0.531,-0.59"/>
+                <xctk:IntegerUpDown Name="epokiTextBox" HorizontalAlignment="Left" Height="22" Margin="141,332,0,0" Text="100" VerticalAlignment="Top" Width="83" Minimum="1"/>
+                <xctk:IntegerUpDown Name="warstwyTextBox" HorizontalAlignment="Left" Height="23" Margin="140,144,0,0" Text="1" VerticalAlignment="Top" Width="83" Minimum="1"/>
+                <xctk:DoubleUpDown  Name="epsilonTextBox" HorizontalAlignment="Left" Height="23" Margin="141,359,0,0"  Value="0.0001" VerticalAlignment="Top" Width="83" Increment="0.0001"/>
+                <TextBox Name="iloscNeuronowTextBox" HorizontalAlignment="Left" Height="23" Margin="140,172,0,0" TextWrapping="Wrap" Text="3" VerticalAlignment="Top" Width="83"/>
+                <TextBlock Name="selectedFileTextBox" HorizontalAlignment="Left" Margin="108,396,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="114" FontStyle="Italic"/>
+                <Button Name="selectFileButton" Content="Select File" HorizontalAlignment="Left" Margin="11,394,0,0" VerticalAlignment="Top" Width="82" Click="selectFileButton_Click"/>
+                <Button Name="stworzSiecButton" Content="Stwórz sieć" HorizontalAlignment="Center" Margin="11,260,9,0" VerticalAlignment="Top" Width="213" Click="stworzSiecButton_Click" Height="29"/>
+                <Label Content="Ilość wejść:" HorizontalAlignment="Left" Margin="11,195,0,0" VerticalAlignment="Top" Width="91"/>
+                <xctk:IntegerUpDown x:Name="iloscWejscTextBox" HorizontalAlignment="Left" Height="23" Margin="141,198,0,0" Text="1" VerticalAlignment="Top" Width="83" Minimum="1"/>
+                <Label Content="Ilość wyjść:" HorizontalAlignment="Left" Margin="11,223,0,0" VerticalAlignment="Top" Width="91"/>
+                <xctk:IntegerUpDown x:Name="iloscWyjscTextBox" HorizontalAlignment="Left" Height="23" Margin="141,226,0,0" Text="1" VerticalAlignment="Top" Width="83" Minimum="1"/>
+                <Label Content="Momentum:" HorizontalAlignment="Left" Margin="11,31,0,0" VerticalAlignment="Top" Width="125"/>
+                <xctk:DoubleUpDown  x:Name="momentumTextBox" HorizontalAlignment="Left" Height="23" Margin="141,31,0,0"  Value="0.5" VerticalAlignment="Top" Width="83" Increment="0.1"/>
+                <Label Content="Bias:" HorizontalAlignment="Left" Margin="10,85,0,0" VerticalAlignment="Top" Width="125"/>
+                <CheckBox x:Name="biasCheckBox" Content="Z biasem" HorizontalAlignment="Left" Margin="141,91,0,0" VerticalAlignment="Top" Width="81" IsChecked="True"/>
+                <Label Content="Ustawienia warstw:" HorizontalAlignment="Left" Margin="55,116,0,0" VerticalAlignment="Top" FontWeight="Bold" RenderTransformOrigin="0.531,-0.59"/>
+                <Label Content="Parametry sieci:" HorizontalAlignment="Left" Margin="64,3,0,0" VerticalAlignment="Top" FontWeight="Bold" RenderTransformOrigin="0.531,-0.59"/>
+                <Label Content="Wspołczynnik nauki:" HorizontalAlignment="Left" Margin="11,58,0,0" VerticalAlignment="Top" Width="125"/>
+                <xctk:DoubleUpDown  x:Name="krokNaukiTextBox" HorizontalAlignment="Left" Height="23" Margin="141,58,0,0"  Value="0.2" VerticalAlignment="Top" Width="83" Increment="0.1"/>
+
+                <Button x:Name="treningSieciButton" Content="Trenuj sieć" HorizontalAlignment="Center" Margin="11,427,9,0" VerticalAlignment="Top" Width="213" Click="treningSieciButton_Click" Height="31"/>
+                <Label Content="Dane testowe:" HorizontalAlignment="Left" Margin="64,472,0,0" VerticalAlignment="Top" FontWeight="Bold" RenderTransformOrigin="0.531,-0.59"/>
+                <TextBlock x:Name="selectedFileToTestTextBox" HorizontalAlignment="Left" Margin="108,504,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="114" FontStyle="Italic"/>
+                <Button x:Name="selectFileToTestButton" Content="Select File" HorizontalAlignment="Left" Margin="11,502,0,0" VerticalAlignment="Top" Width="82" Click="selectFileToTestButton_Click" />
+                <Button x:Name="testSieciButton" Content="Testuj sieć" HorizontalAlignment="Center" Margin="11,538,9,0" VerticalAlignment="Top" Width="213" Click="testSieciButton_Click" Height="31"/>
+            </Grid>
+        </GroupBox>
+        <charting:Chart Name="chart" Margin="287,10,10,29" Title="Wykres błędu" >
+            <charting:Chart.LegendStyle>
+                <Style TargetType="Control">
+                    <Setter Property="Width" Value="0" />
+                    <Setter Property="Height" Value="0" />
+                </Style>
+            </charting:Chart.LegendStyle>
+            <charting:Chart.Axes>
+                <charting:LinearAxis Orientation="Y" ShowGridLines="True" Title="Wartość błędu"></charting:LinearAxis>
+                <charting:LinearAxis Orientation="X" ShowGridLines="False" Title="Ilość epok"></charting:LinearAxis>
+            </charting:Chart.Axes>
+            <charting:Chart.Series>
+                <charting:LineSeries x:Name="seria1" Title="Błąd"  
+                                    ItemsSource="{Binding}" 
+                                    DependentValueBinding="{Binding Path=Value}" 
+                                    IndependentValueBinding="{Binding Path=Key}"
+                                    IsSelectionEnabled="False"  >
+                    <charting:LineSeries.DataPointStyle>
+                        <Style TargetType="{x:Type charting:LineDataPoint}">
+                            <Setter Property="Width" Value="0"/>
+                            <Setter Property="Height" Value="0"/>
+                        </Style>
+                    </charting:LineSeries.DataPointStyle>
+                </charting:LineSeries>
+                <charting:LineSeries x:Name="seria2" Title="Błąd"  
+                                    ItemsSource="{Binding}" 
+                                    DependentValueBinding="{Binding Path=Value}" 
+                                    IndependentValueBinding="{Binding Path=Key}"
+                                    IsSelectionEnabled="False"  >
+                    <charting:LineSeries.DataPointStyle>
+                        <Style TargetType="{x:Type charting:LineDataPoint}">
+                            <Setter Property="Background" Value="Red"></Setter>
+                        </Style>
+                    </charting:LineSeries.DataPointStyle>
+                </charting:LineSeries>
+            </charting:Chart.Series>
+        </charting:Chart>
     </Grid>
 </Window>
