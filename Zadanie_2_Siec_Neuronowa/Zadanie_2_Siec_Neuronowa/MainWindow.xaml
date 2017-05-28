@@ -28,13 +28,13 @@
                 <Label Content="Ilość wyjść:" HorizontalAlignment="Left" Margin="11,223,0,0" VerticalAlignment="Top" Width="91"/>
                 <xctk:IntegerUpDown x:Name="iloscWyjscTextBox" HorizontalAlignment="Left" Height="23" Margin="141,226,0,0" Text="1" VerticalAlignment="Top" Width="83" Minimum="1"/>
                 <Label Content="Momentum:" HorizontalAlignment="Left" Margin="11,31,0,0" VerticalAlignment="Top" Width="125"/>
-                <xctk:DoubleUpDown  x:Name="momentumTextBox" HorizontalAlignment="Left" Height="23" Margin="141,31,0,0"  Value="0.5" VerticalAlignment="Top" Width="83" Increment="0.1"/>
+                <xctk:DoubleUpDown  x:Name="momentumTextBox" HorizontalAlignment="Left" Height="23" Margin="141,31,0,0"  Value="0.4" VerticalAlignment="Top" Width="83" Increment="0.1"/>
                 <Label Content="Bias:" HorizontalAlignment="Left" Margin="10,85,0,0" VerticalAlignment="Top" Width="125"/>
                 <CheckBox x:Name="biasCheckBox" Content="Z biasem" HorizontalAlignment="Left" Margin="141,91,0,0" VerticalAlignment="Top" Width="81" IsChecked="True"/>
                 <Label Content="Ustawienia warstw:" HorizontalAlignment="Left" Margin="55,116,0,0" VerticalAlignment="Top" FontWeight="Bold" RenderTransformOrigin="0.531,-0.59"/>
                 <Label Content="Parametry sieci:" HorizontalAlignment="Left" Margin="64,3,0,0" VerticalAlignment="Top" FontWeight="Bold" RenderTransformOrigin="0.531,-0.59"/>
                 <Label Content="Wspołczynnik nauki:" HorizontalAlignment="Left" Margin="11,58,0,0" VerticalAlignment="Top" Width="125"/>
-                <xctk:DoubleUpDown  x:Name="krokNaukiTextBox" HorizontalAlignment="Left" Height="23" Margin="141,58,0,0"  Value="0.2" VerticalAlignment="Top" Width="83" Increment="0.1"/>
+                <xctk:DoubleUpDown  x:Name="krokNaukiTextBox" HorizontalAlignment="Left" Height="23" Margin="141,58,0,0"  Value="0.001" VerticalAlignment="Top" Width="83" Increment="0.1"/>
 
                 <Button x:Name="treningSieciButton" Content="Trenuj sieć" HorizontalAlignment="Center" Margin="11,427,9,0" VerticalAlignment="Top" Width="213" Click="treningSieciButton_Click" Height="31"/>
                 <Label Content="Dane testowe:" HorizontalAlignment="Left" Margin="64,472,0,0" VerticalAlignment="Top" FontWeight="Bold" RenderTransformOrigin="0.531,-0.59"/>

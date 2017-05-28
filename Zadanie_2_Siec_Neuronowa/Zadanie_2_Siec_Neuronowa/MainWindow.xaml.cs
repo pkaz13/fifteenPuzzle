@@ -39,6 +39,7 @@ namespace Zadanie_2_Siec_Neuronowa
             InitializeComponent();
             seria1.DataContext = Seria1;
             seria2.DataContext = Seria2;
+            GenerujDaneTestowe();
         }
 
         private void selectFileButton_Click(object sender, RoutedEventArgs e)
@@ -137,7 +138,7 @@ namespace Zadanie_2_Siec_Neuronowa
                         warstwa.PoprzedniaWarstwa = null;
                         for (int j = 0; j < warstwa.IloscNeuronow; j++)
                         {
-                            Neuron neuron = new Neuron(iloscWejsc, krokNauki, czyBias, momentum);
+                            Neuron neuron = new Neuron(iloscWejsc, krokNauki, czyBias, momentum,true);
                             warstwa.DodajNeuron(neuron);
 
                         }
@@ -165,7 +166,7 @@ namespace Zadanie_2_Siec_Neuronowa
                         warstwa.PoprzedniaWarstwa = warstwaPoprzednia;
                         for (int j = 0; j < warstwa.IloscNeuronow; j++)
                         {
-                            Neuron neuron = new Neuron(warstwa.PoprzedniaWarstwa.IloscNeuronow, krokNauki, czyBias, momentum,true); //// !!!!!!
+                            Neuron neuron = new Neuron(warstwa.PoprzedniaWarstwa.IloscNeuronow, krokNauki, czyBias, momentum,false); //// !!!!!!
                             warstwa.DodajNeuron(neuron);
 
                         }
@@ -255,6 +256,28 @@ namespace Zadanie_2_Siec_Neuronowa
                 if (blad < siec.Epsilon)
                     break;
             }
+        }
+
+        private void GenerujDaneTestowe()
+        {
+            StringBuilder builder = new StringBuilder();
+            List<double> randomNumbers = new List<double>();
+            for (int i = 1 ; i < 101; i++)
+            {
+                var number= random.NextDouble() * 99 + 1;
+                while (randomNumbers.Contains(number))
+                {
+                    //number = random.Next(1, 100);
+                    number = random.NextDouble() * 99 + 1;
+
+                }
+                randomNumbers.Add(number);
+                builder.AppendLine(number + " " + Math.Sqrt(number));
+            }
+            string path = "../../Dane_Treningowe.txt";
+            File.WriteAllText(path,builder.ToString());
+            filePath = System.IO.Path.GetFullPath(path);
+            selectedFileTextBox.Text = System.IO.Path.GetFileName(path);
         }
     }
 }
