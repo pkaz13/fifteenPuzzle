@@ -118,6 +118,8 @@ namespace Zadanie_2_Siec_Neuronowa
         {
             try
             {
+                Seria1.Clear();
+                Seria2.Clear();
                 /////Wczytywanie danych z formularza
                 double epsilon = epsilonTextBox.Value.Value;
                 int ileWarstw = warstwyTextBox.Value.Value + 1;
@@ -203,9 +205,19 @@ namespace Zadanie_2_Siec_Neuronowa
 
         private void PrzeprowadzTestSieci()
         {
-            string path = @"../../../Logi/Wynik_testu_sieci.txt";
+            Seria1.Clear();
+            Seria2.Clear();
+            string path = @"../../Logi/Wynik_testu_sieci.txt";
             System.IO.File.Create(path).Close();
-            siec.TestSieci(DaneTestowe);  /// dokonczyc implementacje metody
+            var wyniki=siec.TestSieci(DaneTestowe);  /// dokonczyc implementacje metody
+            foreach (var punkt in DaneTestowe)
+            {
+                Seria1.Add(new KeyValuePair<double, double>(punkt.Wejscia[0], punkt.Wyjscia[0]));
+            }
+            for (int i = 0; i < wyniki.Count; i = i + 1)
+            {
+                Seria2.Add(new KeyValuePair<double, double>(wyniki[i].Key, wyniki[i].Value));
+            }
         }
 
         private void treningSieciButton_Click(object sender, RoutedEventArgs e)
@@ -215,6 +227,7 @@ namespace Zadanie_2_Siec_Neuronowa
                 siec.IloscEpok = epokiTextBox.Value.Value;
                 siec.Epsilon = epsilonTextBox.Value.Value;
                 Seria1.Clear();
+                Seria2.Clear();
                 wczytajDane(siec.IloscWejsc, siec.IloscWyjsc, this.filePath, true);
                 PrzejdzWszystkieEpoki();
                 string messageBoxText = "Trening ukończony !!!";

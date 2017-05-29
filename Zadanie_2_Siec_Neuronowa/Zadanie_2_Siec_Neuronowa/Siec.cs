@@ -52,8 +52,9 @@ namespace Zadanie_2_Siec_Neuronowa
             return blad;
         }
 
-        public void TestSieci(List<DanaTestowa> dane)
+        public List<KeyValuePair<double, double>> TestSieci(List<DanaTestowa> dane)
         {
+            List<KeyValuePair<double, double>> punkty = new List<KeyValuePair<double, double>>();
             foreach (var item in dane)
             {
                 List<double> temp = new List<double>();
@@ -69,7 +70,9 @@ namespace Zadanie_2_Siec_Neuronowa
                         temp = Warstwy[i].SumujNeurony(temp);
                     }
                 }
+                punkty.Add(new KeyValuePair<double, double>(item.Wejscia[0], temp[0]));
             }
+            return punkty;
         }
 
         private void ObliczBladDlaPoszcegolnychNeuronow(DanaTestowa dane)
