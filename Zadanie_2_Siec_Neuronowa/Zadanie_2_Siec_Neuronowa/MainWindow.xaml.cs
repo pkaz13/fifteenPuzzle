@@ -39,6 +39,7 @@ namespace Zadanie_2_Siec_Neuronowa
             InitializeComponent();
             seria1.DataContext = Seria1;
             seria2.DataContext = Seria2;
+            GenerujDaneTreningowe();
             GenerujDaneTestowe();
         }
 
@@ -168,13 +169,14 @@ namespace Zadanie_2_Siec_Neuronowa
                         warstwa.PoprzedniaWarstwa = warstwaPoprzednia;
                         for (int j = 0; j < warstwa.IloscNeuronow; j++)
                         {
-                            Neuron neuron = new Neuron(warstwa.PoprzedniaWarstwa.IloscNeuronow, krokNauki, czyBias, momentum,false); //// !!!!!!
+                            Neuron neuron = new Neuron(warstwa.PoprzedniaWarstwa.IloscNeuronow, krokNauki, czyBias, momentum,true); //// !!!!!!
                             warstwa.DodajNeuron(neuron);
 
                         }
                         siec.Warstwy.Add(warstwa);
                     }
                 }
+                siec.Warstwy.FirstOrDefault(x => x.rodzajWarstwy == Warstwa.RodzajWarstwy.Wyjsciowa).Neurony[0].CzySigmoidalnaAktywacja = false;
                 string messageBoxText = "Sieć została poprawnie utworzona !!!";
                 string caption = "Sieć utworzona";
                 MessageBoxButton button = MessageBoxButton.OK;
@@ -214,10 +216,13 @@ namespace Zadanie_2_Siec_Neuronowa
             {
                 Seria1.Add(new KeyValuePair<double, double>(punkt.Wejscia[0], punkt.Wyjscia[0]));
             }
+            StringBuilder builder = new StringBuilder();
             for (int i = 0; i < wyniki.Count; i = i + 1)
             {
+                builder.AppendLine(String.Format("Wejście : {0} Wartość otrzymana : {1} Wartość spodziewana : {2}", wyniki[i].Key, wyniki[i].Value, Math.Sqrt(wyniki[i].Key)));
                 Seria2.Add(new KeyValuePair<double, double>(wyniki[i].Key, wyniki[i].Value));
             }
+            File.WriteAllText("../../wyniki_testu.txt", builder.ToString());
         }
 
         private void treningSieciButton_Click(object sender, RoutedEventArgs e)
@@ -271,7 +276,7 @@ namespace Zadanie_2_Siec_Neuronowa
             }
         }
 
-        private void GenerujDaneTestowe()
+        private void GenerujDaneTreningowe()
         {
             StringBuilder builder = new StringBuilder();
             List<double> randomNumbers = new List<double>();
@@ -292,5 +297,20 @@ namespace Zadanie_2_Siec_Neuronowa
             filePath = System.IO.Path.GetFullPath(path);
             selectedFileTextBox.Text = System.IO.Path.GetFileName(path);
         }
+
+        private void GenerujDaneTestowe()
+        {
+            StringBuilder builder = new StringBuilder();
+            for (int i = 1; i < 101; i++)
+            {
+                builder.AppendLine(i + " " + Math.Sqrt(i));
+            }
+            string path = "../../Dane_Testowe.txt";
+            File.WriteAllText(path, builder.ToString());
+            filePathToTest = System.IO.Path.GetFullPath(path);
+            selectedFileToTestTextBox.Text = System.IO.Path.GetFileName(path);
+        }
+
+
     }
 }
